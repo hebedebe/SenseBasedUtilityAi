@@ -11,7 +11,7 @@ class UPersonaComponent;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class DYNAMICPERSONALITYAI_API USenseDataProcessor : public UObject
 {
 	GENERATED_BODY()

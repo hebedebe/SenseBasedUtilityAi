@@ -38,7 +38,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	float BehaviourEvaluationFrequency;
 	
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Instanced)
 	TArray<UBehaviour*> Behaviours;
 	
 	UPROPERTY(BlueprintReadWrite)

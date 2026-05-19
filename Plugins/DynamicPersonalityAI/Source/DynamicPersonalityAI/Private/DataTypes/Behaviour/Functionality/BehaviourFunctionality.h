@@ -12,7 +12,7 @@ class UBehaviourComponent;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 {
 	GENERATED_BODY()

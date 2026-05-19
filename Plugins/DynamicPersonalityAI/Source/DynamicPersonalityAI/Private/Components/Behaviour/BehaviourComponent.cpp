@@ -27,10 +27,15 @@ void UBehaviourComponent::BeginPlay()
 
 	Persona = GetOwner()->GetComponentByClass<UPersonaComponent>();
 	Memory = GetOwner()->GetComponentByClass<UMemoryComponent>();
-	
+
 	for (const auto Behaviour : Behaviours)
 	{
-		Behaviour->Initialise(this);
+		if (IsValid(Behaviour))
+		{
+			Behaviour->Initialise(this);
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("An error occurred initialising a behaviour"))
 	}
 	
 	GetWorld()->GetTimerManager().SetTimer(BehaviourEvaluationTimerHandle, 
@@ -49,6 +54,7 @@ void UBehaviourComponent::BeginPlay()
 		
 				TargetBehaviour->SetActive(true);
 				TargetBehaviour->GetFunctionality()->EnterBehaviour();
+				ActiveBehaviour = TargetBehaviour;
 			}
 		}, 
 		BehaviourEvaluationFrequency, true);

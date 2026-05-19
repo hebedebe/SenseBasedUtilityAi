@@ -47,7 +47,7 @@ void UPersonaComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		{
 			if (SenseDataProcessor->TargetSenseType == Data.SenseType)
 			{
-				SenseDataProcessor->ProcessSenseData(this, &Data);
+				SenseDataProcessor->ProcessSenseData(this, Data);
 			}
 		}
 	}
