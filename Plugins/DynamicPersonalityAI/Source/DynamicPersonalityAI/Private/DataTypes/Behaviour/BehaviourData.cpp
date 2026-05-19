@@ -1,22 +1,24 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Behaviour.h"
+#include "BehaviourData.h"
 
 #include "Functionality/BehaviourFunctionality.h"
 #include "Components/Behaviour/BehaviourComponent.h"
 #include "DataTypes/Mood/Mood.h"
 
-void UBehaviour::Initialise(UBehaviourComponent* BehaviourComponent)
+UBehaviourFunctionality* UBehaviourData::Initialise(UBehaviourComponent* BehaviourComponent)
 {
-	BehaviourFunctionality = NewObject<UBehaviourFunctionality>(this, BehaviourFunctionalityClass);
+	UBehaviourFunctionality* BehaviourFunctionality = NewObject<UBehaviourFunctionality>(this, BehaviourFunctionalityClass);
 	BehaviourFunctionality->BehaviourComponent = BehaviourComponent;
 	BehaviourFunctionality->PersonaComponent = BehaviourComponent->Persona;
 	BehaviourFunctionality->MemoryComponent = BehaviourComponent->Memory;
 	BehaviourFunctionality->OwningActor = BehaviourComponent->GetOwner();
+	
+	return BehaviourFunctionality;
 }
 
-float UBehaviour::EvaluateMoodWeights(TMap<UMood*, float> OtherWeights)
+float UBehaviourData::EvaluateMoodWeights(TMap<UMood*, float> OtherWeights)
 {
 	TArray<float> Weights1;
 	TArray<float> Weights2;
@@ -41,19 +43,4 @@ float UBehaviour::EvaluateMoodWeights(TMap<UMood*, float> OtherWeights)
 	Distance = FMath::Max(sqrt(Distance) - Bias, 0);
 	
 	return Distance;
-}
-
-void UBehaviour::SetActive(const bool bNewActive)
-{
-	bActive = bNewActive;
-}
-
-bool UBehaviour::GetActive() const
-{
-	return bActive;
-}
-
-UBehaviourFunctionality* UBehaviour::GetFunctionality() const
-{
-	return BehaviourFunctionality;
 }

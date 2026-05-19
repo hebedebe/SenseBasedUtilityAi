@@ -10,7 +10,7 @@
 class UMemoryComponent;
 class UMood;
 class UPersonaComponent;
-class UBehaviour;
+class UBehaviourData;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UBehaviourComponent : public UActorComponent
@@ -29,17 +29,26 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	UBehaviour* EvaluateBehaviours();
+	UBehaviourData* EvaluateBehaviours();
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TMap<UMood*, float> GetPersonaWeights() const;
+	
+	UFUNCTION(BlueprintCallable)
+	void EnterBehaviour(UBehaviourData* Data);
+	
+	UFUNCTION(BlueprintCallable)
+	void ExitBehaviour(UBehaviourData* Data);
+	
+	UFUNCTION(BlueprintCallable)
+	void TickBehaviour(UBehaviourData* Data, float DeltaTime);
 	
 public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	float BehaviourEvaluationFrequency;
 	
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Instanced)
-	TArray<UBehaviour*> Behaviours;
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	TArray<class UBehaviourData*> BehaviourData;
 	
 	UPROPERTY(BlueprintReadWrite)
 	UPersonaComponent* Persona;
@@ -49,8 +58,10 @@ public:
 	
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	UBehaviour* ActiveBehaviour;
+	UBehaviourData* ActiveBehaviour;
 	
 	UPROPERTY(BlueprintReadOnly)
 	FTimerHandle BehaviourEvaluationTimerHandle;
+	
+	TMap<class UBehaviourData*, class UBehaviourFunctionality*> BehaviourFunctionalities;
 };

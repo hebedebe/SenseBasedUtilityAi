@@ -6,10 +6,6 @@
 #include "Components/SceneComponent.h"
 #include "BaseSenseComponent.generated.h"
 
-
-class UPersonaComponent;
-class UBehaviourComponent;
-
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UBaseSenseComponent : public USceneComponent
 {
@@ -25,8 +21,8 @@ protected:
 	
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	UBehaviourComponent* BehaviourComponent;
-	UPROPERTY(BlueprintReadOnly)
-	UPersonaComponent* PersonaComponent;
+	class UBehaviourComponent* BehaviourComponent;
 	
+	UPROPERTY(BlueprintReadOnly)
+	class UPersonaComponent* PersonaComponent;
 };

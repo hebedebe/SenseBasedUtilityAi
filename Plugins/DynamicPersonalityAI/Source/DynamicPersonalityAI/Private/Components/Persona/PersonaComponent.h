@@ -6,13 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "PersonaComponent.generated.h"
 
-
-class USenseDataProcessor;
-struct FSenseData;
-class UMemoryComponent;
-class UBehaviourComponent;
-class UMood;
-
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UPersonaComponent : public UActorComponent
 {
@@ -33,32 +26,31 @@ public:
 	
 public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	TMap<UMood*, float> GetMoodWeights();
+	TMap<class UMood*, float> GetMoodWeights();
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	float GetMoodValue(UMood* Mood);
+	float GetMoodValue(class UMood* Mood);
 	
 	UFUNCTION(BlueprintCallable)
-	void SetMoodValue(UMood* Mood, float Value);
+	void SetMoodValue(class UMood* Mood, float Value);
 	
 	UFUNCTION(BlueprintCallable)
-	void AddMoodValue(UMood* Mood, float Value);
+	void AddMoodValue(class UMood* Mood, float Value);
 	
 public:
-
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	TArray<TSubclassOf<USenseDataProcessor>> SenseDataProcessorClasses;
+	TArray<TSubclassOf<class USenseDataProcessor>> SenseDataProcessorClasses;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TMap<class UMood*, float> MoodWeights;
+	
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	TArray<USenseDataProcessor*> SenseDataProcessors;
+	TArray<class USenseDataProcessor*> SenseDataProcessors;
 	
 	UPROPERTY(BlueprintReadWrite)
-	UBehaviourComponent* Behaviour;
+	class UBehaviourComponent* Behaviour;
 	
 	UPROPERTY(BlueprintReadWrite)
-	UMemoryComponent* Memory;
-	
-	UPROPERTY(BlueprintReadWrite)
-	TMap<UMood*, float> MoodWeights;
+	class UMemoryComponent* Memory;
 };

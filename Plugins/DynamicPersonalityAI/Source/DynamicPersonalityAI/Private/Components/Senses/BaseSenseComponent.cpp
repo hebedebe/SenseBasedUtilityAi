@@ -3,8 +3,8 @@
 
 #include "BaseSenseComponent.h"
 
-#include "DataTypes/Behaviour/Behaviour.h"
-
+#include "Components/Behaviour/BehaviourComponent.h"
+#include "Components/Persona/PersonaComponent.h"
 
 // Sets default values for this component's properties
 UBaseSenseComponent::UBaseSenseComponent()

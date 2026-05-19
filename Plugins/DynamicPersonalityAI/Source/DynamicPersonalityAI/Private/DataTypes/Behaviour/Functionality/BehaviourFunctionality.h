@@ -17,7 +17,7 @@ class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 {
 	GENERATED_BODY()
 	
-	friend class UBehaviour;
+	friend class UBehaviourData;
 	
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

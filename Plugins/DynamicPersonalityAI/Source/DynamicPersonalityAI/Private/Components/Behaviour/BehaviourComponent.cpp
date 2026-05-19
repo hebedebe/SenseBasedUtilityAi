@@ -5,7 +5,7 @@
 
 #include "Components/Persona/PersonaComponent.h"
 #include "Components/Memory/MemoryComponent.h"
-#include "DataTypes/Behaviour/Behaviour.h"
+#include "DataTypes/Behaviour/BehaviourData.h"
 #include "DataTypes/Behaviour/Functionality/BehaviourFunctionality.h"
 
 
@@ -28,11 +28,11 @@ void UBehaviourComponent::BeginPlay()
 	Persona = GetOwner()->GetComponentByClass<UPersonaComponent>();
 	Memory = GetOwner()->GetComponentByClass<UMemoryComponent>();
 
-	for (const auto Behaviour : Behaviours)
+	for (const auto Data : BehaviourData)
 	{
-		if (IsValid(Behaviour))
+		if (IsValid(Data))
 		{
-			Behaviour->Initialise(this);
+			BehaviourFunctionalities.Add(Data, Data->Initialise(this));
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("An error occurred initialising a behaviour"))
@@ -42,19 +42,19 @@ void UBehaviourComponent::BeginPlay()
 		[this]
 		{
 			
-			if (UBehaviour* TargetBehaviour = EvaluateBehaviours())
+			if (UBehaviourData* TargetBehaviour = EvaluateBehaviours())
 			{
+				UE_LOG(LogTemp, Warning, TEXT("Evaluated behaviour as %s "), *TargetBehaviour->GetName())
+				
 				if (ActiveBehaviour == TargetBehaviour) return;
 		
 				if (ActiveBehaviour)
 				{
-					ActiveBehaviour->SetActive(false);
-					ActiveBehaviour->GetFunctionality()->ExitBehaviour();
+					ExitBehaviour(ActiveBehaviour);
 				}
 		
-				TargetBehaviour->SetActive(true);
-				TargetBehaviour->GetFunctionality()->EnterBehaviour();
 				ActiveBehaviour = TargetBehaviour;
+				EnterBehaviour(ActiveBehaviour);
 			}
 		}, 
 		BehaviourEvaluationFrequency, true);
@@ -66,15 +66,15 @@ void UBehaviourComponent::TickComponent(float DeltaTime, enum ELevelTick TickTyp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
 	if (ActiveBehaviour) 
-		ActiveBehaviour->GetFunctionality()->TickBehaviour(DeltaTime);
+		TickBehaviour(ActiveBehaviour, DeltaTime);
 }
 
-UBehaviour* UBehaviourComponent::EvaluateBehaviours()
+UBehaviourData* UBehaviourComponent::EvaluateBehaviours()
 {
 	float LowestWeight = 1e+38;
-	UBehaviour* CurrentBehaviour = nullptr;
+	UBehaviourData* CurrentBehaviour = nullptr;
 	
-	for (UBehaviour* Behaviour : Behaviours)
+	for (UBehaviourData* Behaviour : BehaviourData)
 	{
 		const float EvaluatedMoodWeights = Behaviour->EvaluateMoodWeights(GetPersonaWeights());
 		if (EvaluatedMoodWeights < LowestWeight)
@@ -90,4 +90,19 @@ UBehaviour* UBehaviourComponent::EvaluateBehaviours()
 TMap<UMood*, float> UBehaviourComponent::GetPersonaWeights() const
 {
 	return Persona->GetMoodWeights();
+}
+
+void UBehaviourComponent::EnterBehaviour(UBehaviourData* Data)
+{
+	BehaviourFunctionalities[Data]->EnterBehaviour();
+}
+
+void UBehaviourComponent::ExitBehaviour(UBehaviourData* Data)
+{
+	BehaviourFunctionalities[Data]->ExitBehaviour();
+}
+
+void UBehaviourComponent::TickBehaviour(UBehaviourData* Data, const float DeltaTime)
+{
+	BehaviourFunctionalities[Data]->TickBehaviour(DeltaTime);
 }
