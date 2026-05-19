@@ -3,45 +3,43 @@
 #include "CoreMinimal.h"
 #include "SenseCustomData.generated.h"
 
+#define DATATYPE(TYPE) \
+	UPROPERTY(BlueprintReadOnly) \
+	TYPE TYPE##Data; \
+	UFUNCTION(BlueprintCallable) \
+	void Set##TYPE(const TYPE Value) {TYPE##Data = Value;}\
+	UFUNCTION(BlueprintCallable) \
+	TYPE Get##TYPE() {return TYPE##Data;} \
+	static FSenseCustomData Create##TYPE(const TYPE Value) { auto Data = FSenseCustomData(); Data.Set##TYPE(Value); return Data;} \
+	DATATYPEPOINTER(TYPE)
+
+#define DATATYPEPOINTER(TYPE) \
+	UPROPERTY(BlueprintReadOnly) \
+	TYPE* TYPE##PointerData; \
+	UFUNCTION(BlueprintCallable) \
+	void Set##TYPE##Pointer(TYPE* Value) {TYPE##PointerData = Value;}\
+	UFUNCTION(BlueprintCallable) \
+	TYPE* Get##TYPE##Pointer() {return TYPE##PointerData;} \
+	static FSenseCustomData Create##TYPE##Pointer(const TYPE* Value) { auto Data = FSenseCustomData(); Data.Set##TYPE##Pointer(const_cast<TYPE*>(Value)); return Data;}
+
 USTRUCT(BlueprintType)
 struct FSenseCustomData
 {
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(BlueprintReadOnly)
-	float FloatData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	int IntData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	FName NameData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	FString StringData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	FVector2D Vector2DData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	FVector VectorData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	bool BoolData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	FHitResult HitData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	UObject* ObjectData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	ACharacter* CharacterData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	AActor* ActorData;
-	
-	UPROPERTY(BlueprintReadOnly)
-	UActorComponent* ComponentData;
+	DATATYPE(float)
+	DATATYPE(int)
+	DATATYPE(FName)
+	DATATYPE(FString)
+	DATATYPE(FVector)
+	DATATYPE(FVector2D)
+	DATATYPE(bool)
+	DATATYPE(FHitResult)
+	DATATYPEPOINTER(UDamageType)
+	DATATYPEPOINTER(AController)
+	DATATYPEPOINTER(UObject)
+	DATATYPEPOINTER(ACharacter)
+	DATATYPEPOINTER(AActor)
+	DATATYPEPOINTER(UActorComponent)
 };

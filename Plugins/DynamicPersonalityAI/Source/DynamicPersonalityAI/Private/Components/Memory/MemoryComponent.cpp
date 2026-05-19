@@ -8,6 +8,7 @@ UMemoryComponent::UMemoryComponent()
 
 void UMemoryComponent::RegisterSenseData(const FSenseData& SenseData)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Registered SenseData (%s)"), *SenseData.SenseType.ToString())
 	SenseDataQueue.Enqueue(SenseData);
 }
 

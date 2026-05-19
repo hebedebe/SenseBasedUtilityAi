@@ -5,6 +5,7 @@
 
 #include "Components/Behaviour/BehaviourComponent.h"
 #include "Components/Persona/PersonaComponent.h"
+#include "Components/Memory/MemoryComponent.h"
 
 // Sets default values for this component's properties
 UBaseSenseComponent::UBaseSenseComponent()
@@ -24,4 +25,5 @@ void UBaseSenseComponent::BeginPlay()
 
 	BehaviourComponent = GetOwner()->GetComponentByClass<UBehaviourComponent>();
 	PersonaComponent = GetOwner()->GetComponentByClass<UPersonaComponent>();
+	MemoryComponent = GetOwner()->GetComponentByClass<UMemoryComponent>();
 }

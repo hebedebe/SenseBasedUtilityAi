@@ -19,10 +19,17 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
+public:
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	FName SenseType;
+	
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	class UBehaviourComponent* BehaviourComponent;
 	
 	UPROPERTY(BlueprintReadOnly)
 	class UPersonaComponent* PersonaComponent;
+	
+	UPROPERTY(BlueprintReadOnly)
+	class UMemoryComponent* MemoryComponent;
 };
