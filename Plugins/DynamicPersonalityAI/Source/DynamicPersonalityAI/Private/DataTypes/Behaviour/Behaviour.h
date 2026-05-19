@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "Behaviour.generated.h"
 
+class UBehaviourComponent;
 class UMood;
 class UBehaviourFunctionality;
 /**
@@ -18,7 +19,7 @@ class DYNAMICPERSONALITYAI_API UBehaviour : public UDataAsset
 	
 public:
 	UFUNCTION(BlueprintCallable)
-	void Initialise();
+	void Initialise(UBehaviourComponent* BehaviourComponent);
 	
 	UFUNCTION(BlueprintCallable)
 	virtual float EvaluateMoodWeights(TMap<UMood*, float> OtherWeights);

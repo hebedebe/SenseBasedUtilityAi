@@ -7,6 +7,10 @@
 #include "PersonaComponent.generated.h"
 
 
+class USenseDataProcessor;
+struct FSenseData;
+class UMemoryComponent;
+class UBehaviourComponent;
 class UMood;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -34,13 +38,27 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMoodValue(UMood* Mood);
 	
-	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFUNCTION(BlueprintCallable)
 	void SetMoodValue(UMood* Mood, float Value);
 	
-	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFUNCTION(BlueprintCallable)
 	void AddMoodValue(UMood* Mood, float Value);
 	
+public:
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	TArray<TSubclassOf<USenseDataProcessor>> SenseDataProcessorClasses;
+
 protected:
+	UPROPERTY(BlueprintReadOnly)
+	TArray<USenseDataProcessor*> SenseDataProcessors;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UBehaviourComponent* Behaviour;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UMemoryComponent* Memory;
+	
 	UPROPERTY(BlueprintReadWrite)
 	TMap<UMood*, float> MoodWeights;
 };

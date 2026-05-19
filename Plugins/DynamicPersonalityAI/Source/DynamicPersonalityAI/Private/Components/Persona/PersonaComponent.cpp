@@ -3,6 +3,10 @@
 
 #include "PersonaComponent.h"
 
+#include "DataProcessor/SenseDataProcessor.h"
+#include "../Behaviour/BehaviourComponent.h"
+#include "Components/Memory/MemoryComponent.h"
+
 
 // Sets default values for this component's properties
 UPersonaComponent::UPersonaComponent()
@@ -20,8 +24,13 @@ void UPersonaComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	Behaviour = GetOwner()->GetComponentByClass<UBehaviourComponent>();
+	Memory = GetOwner()->GetComponentByClass<UMemoryComponent>();
 	
+	for (auto ProcessorClass : SenseDataProcessorClasses)
+	{
+		SenseDataProcessors.Add(NewObject<USenseDataProcessor>(ProcessorClass));
+	}
 }
 
 
@@ -31,7 +40,17 @@ void UPersonaComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	while (!Memory->IsSenseQueueEmpty())
+	{
+		FSenseData Data = Memory->PopSense();
+		for (const auto SenseDataProcessor : SenseDataProcessors)
+		{
+			if (SenseDataProcessor->TargetSenseType == Data.SenseType)
+			{
+				SenseDataProcessor->ProcessSenseData(this, &Data);
+			}
+		}
+	}
 }
 
 TMap<UMood*, float> UPersonaComponent::GetMoodWeights()
@@ -59,7 +78,7 @@ void UPersonaComponent::SetMoodValue(UMood* Mood, float Value)
 	MoodWeights[Mood] = Value;
 }
 
-void UPersonaComponent::AddMoodValue(UMood* Mood, float Value)
+void UPersonaComponent::AddMoodValue(UMood* Mood, const float Value)
 {
 	if (!MoodWeights.Contains(Mood))
 	{
@@ -68,4 +87,3 @@ void UPersonaComponent::AddMoodValue(UMood* Mood, float Value)
 	}
 	MoodWeights[Mood] += Value;
 }
-

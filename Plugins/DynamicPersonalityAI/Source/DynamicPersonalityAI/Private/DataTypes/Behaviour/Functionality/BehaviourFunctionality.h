@@ -6,6 +6,9 @@
 #include "UObject/Object.h"
 #include "BehaviourFunctionality.generated.h"
 
+class UPersonaComponent;
+class UMemoryComponent;
+class UBehaviourComponent;
 /**
  * 
  */
@@ -14,11 +17,26 @@ class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 {
 	GENERATED_BODY()
 	
+	friend class UBehaviour;
+	
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	virtual void EnterBehaviour();
+	void EnterBehaviour();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	virtual void TickBehaviour(float DeltaTime);
+	void TickBehaviour(float DeltaTime);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	virtual void ExitBehaviour();
+	void ExitBehaviour();
+	
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	UBehaviourComponent* BehaviourComponent;
+	
+	UPROPERTY(BlueprintReadOnly)
+	UMemoryComponent* MemoryComponent;
+	
+	UPROPERTY(BlueprintReadOnly)
+	UPersonaComponent* PersonaComponent;
+	
+	UPROPERTY(BlueprintReadOnly)
+	AActor* OwningActor;
 };

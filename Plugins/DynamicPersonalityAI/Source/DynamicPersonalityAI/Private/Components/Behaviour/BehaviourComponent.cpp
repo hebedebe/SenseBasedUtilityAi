@@ -4,8 +4,9 @@
 #include "BehaviourComponent.h"
 
 #include "Components/Persona/PersonaComponent.h"
+#include "Components/Memory/MemoryComponent.h"
 #include "DataTypes/Behaviour/Behaviour.h"
-#include "DataTypes/Behaviour/BehaviourFunctionality.h"
+#include "DataTypes/Behaviour/Functionality/BehaviourFunctionality.h"
 
 
 // Sets default values for this component's properties
@@ -24,28 +25,39 @@ void UBehaviourComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	Persona = GetOwner()->GetComponentByClass<UPersonaComponent>();
+	Memory = GetOwner()->GetComponentByClass<UMemoryComponent>();
 	
+	for (const auto Behaviour : Behaviours)
+	{
+		Behaviour->Initialise(this);
+	}
+	
+	GetWorld()->GetTimerManager().SetTimer(BehaviourEvaluationTimerHandle, 
+		[this]
+		{
+			
+			if (UBehaviour* TargetBehaviour = EvaluateBehaviours())
+			{
+				if (ActiveBehaviour == TargetBehaviour) return;
+		
+				if (ActiveBehaviour)
+				{
+					ActiveBehaviour->SetActive(false);
+					ActiveBehaviour->GetFunctionality()->ExitBehaviour();
+				}
+		
+				TargetBehaviour->SetActive(true);
+				TargetBehaviour->GetFunctionality()->EnterBehaviour();
+			}
+		}, 
+		BehaviourEvaluationFrequency, true);
 }
 
 void UBehaviourComponent::TickComponent(float DeltaTime, enum ELevelTick TickType,
 	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	if (UBehaviour* TargetBehaviour = EvaluateBehaviours())
-	{
-		if (ActiveBehaviour == TargetBehaviour) return;
-		
-		if (ActiveBehaviour)
-		{
-			ActiveBehaviour->SetActive(false);
-			ActiveBehaviour->GetFunctionality()->ExitBehaviour();
-		}
-		
-		TargetBehaviour->SetActive(true);
-		TargetBehaviour->GetFunctionality()->EnterBehaviour();
-	}
 	
 	if (ActiveBehaviour) 
 		ActiveBehaviour->GetFunctionality()->TickBehaviour(DeltaTime);
@@ -53,7 +65,7 @@ void UBehaviourComponent::TickComponent(float DeltaTime, enum ELevelTick TickTyp
 
 UBehaviour* UBehaviourComponent::EvaluateBehaviours()
 {
-	float LowestWeight = INFINITY;
+	float LowestWeight = 1e+38;
 	UBehaviour* CurrentBehaviour = nullptr;
 	
 	for (UBehaviour* Behaviour : Behaviours)

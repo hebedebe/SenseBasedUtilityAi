@@ -3,12 +3,17 @@
 
 #include "Behaviour.h"
 
-#include "BehaviourFunctionality.h"
-#include "DataTypes/Mood.h"
+#include "Functionality/BehaviourFunctionality.h"
+#include "Components/Behaviour/BehaviourComponent.h"
+#include "DataTypes/Mood/Mood.h"
 
-void UBehaviour::Initialise()
+void UBehaviour::Initialise(UBehaviourComponent* BehaviourComponent)
 {
 	BehaviourFunctionality = NewObject<UBehaviourFunctionality>(this, BehaviourFunctionalityClass);
+	BehaviourFunctionality->BehaviourComponent = BehaviourComponent;
+	BehaviourFunctionality->PersonaComponent = BehaviourComponent->Persona;
+	BehaviourFunctionality->MemoryComponent = BehaviourComponent->Memory;
+	BehaviourFunctionality->OwningActor = BehaviourComponent->GetOwner();
 }
 
 float UBehaviour::EvaluateMoodWeights(TMap<UMood*, float> OtherWeights)
@@ -33,7 +38,7 @@ float UBehaviour::EvaluateMoodWeights(TMap<UMood*, float> OtherWeights)
 	{
 		Distance += pow(Weights1[i] - Weights2[i], 2.f);
 	}
-	Distance = FMath::Clamp(sqrt(Distance) + Bias, 0, INFINITY);
+	Distance = FMath::Max(sqrt(Distance) - Bias, 0);
 	
 	return Distance;
 }

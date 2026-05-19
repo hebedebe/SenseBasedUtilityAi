@@ -7,6 +7,7 @@
 #include "BehaviourComponent.generated.h"
 
 
+class UMemoryComponent;
 class UMood;
 class UPersonaComponent;
 class UBehaviour;
@@ -34,13 +35,22 @@ public:
 	TMap<UMood*, float> GetPersonaWeights() const;
 	
 public:
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	float BehaviourEvaluationFrequency;
+	
 	UPROPERTY(BlueprintReadOnly)
 	TArray<UBehaviour*> Behaviours;
 	
 	UPROPERTY(BlueprintReadWrite)
 	UPersonaComponent* Persona;
 	
-private:
+	UPROPERTY(BlueprintReadWrite)
+	UMemoryComponent* Memory;
+	
+protected:
 	UPROPERTY(BlueprintReadOnly)
 	UBehaviour* ActiveBehaviour;
+	
+	UPROPERTY(BlueprintReadOnly)
+	FTimerHandle BehaviourEvaluationTimerHandle;
 };
