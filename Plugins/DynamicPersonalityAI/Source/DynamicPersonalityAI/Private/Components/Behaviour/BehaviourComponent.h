@@ -63,5 +63,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	FTimerHandle BehaviourEvaluationTimerHandle;
 	
+	UPROPERTY(BlueprintReadOnly)
 	TMap<class UBehaviourData*, class UBehaviourFunctionality*> BehaviourFunctionalities;
 };
