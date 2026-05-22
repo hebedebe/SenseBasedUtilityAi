@@ -6,6 +6,7 @@
 #include "Containers/Queue.h"
 #include "MemoryComponent.generated.h"
 
+#define SENSEKEY(name, value) {FName(name), value}
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UMemoryComponent : public UActorComponent

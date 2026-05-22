@@ -36,10 +36,13 @@ public:
 	DATATYPE(FVector2D)
 	DATATYPE(bool)
 	DATATYPE(FHitResult)
+	
+	// Pointer only values - won't compile with a regular value
 	DATATYPEPOINTER(UDamageType)
 	DATATYPEPOINTER(AController)
 	DATATYPEPOINTER(UObject)
 	DATATYPEPOINTER(ACharacter)
 	DATATYPEPOINTER(AActor)
 	DATATYPEPOINTER(UActorComponent)
+	DATATYPEPOINTER(UPrimitiveComponent)
 };
