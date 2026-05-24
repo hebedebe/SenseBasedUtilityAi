@@ -6,6 +6,7 @@
 #include "Components/Senses/BaseSenseComponent.h"
 #include "TouchSenseComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_SixParams( FOnTouchedSignature, UPrimitiveComponent, OnComponentBeginOverlap, UPrimitiveComponent*, OverlappedComponent, AActor*, OtherActor, UPrimitiveComponent*, OtherComp, int32, OtherBodyIndex, bool, bFromSweep, const FHitResult &, SweepResult);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UTouchSenseComponent : public UBaseSenseComponent
@@ -25,6 +26,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool bSendActorCollisionSignal = true;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnTouchedSignature OnTouched;
 
 protected:
 	// Called when the game starts
