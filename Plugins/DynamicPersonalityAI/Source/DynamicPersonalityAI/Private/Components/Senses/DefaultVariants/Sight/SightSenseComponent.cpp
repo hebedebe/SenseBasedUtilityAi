@@ -45,13 +45,6 @@ void USightSenseComponent::BeginPlay()
 
 void USightSenseComponent::ProcessNearObjects()
 {
-	// UE_LOG(LogTemp, Log, TEXT("SightSenseComponent::ProcessNearObjects"));
-	
-	if (OverlappedComponents.IsEmpty())
-	{
-	UE_LOG(LogTemp, Warning, TEXT("No overlapped components"))		
-	}	
-	
 	for (UPrimitiveComponent* Component : OverlappedComponents)
 	{
 		FHitResult HitResult;
@@ -59,16 +52,17 @@ void USightSenseComponent::ProcessNearObjects()
 		FCollisionQueryParams CollisionParams;
 		CollisionParams.AddIgnoredActor(GetOwner());
 		CollisionParams.AddIgnoredActor(Component->GetOwner());
+		
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, GetComponentLocation(), 
-			Component->GetComponentLocation(),ECC_Camera))
+			Component->GetComponentLocation(),ECC_Camera, CollisionParams))
 		{
 			if (VisibleComponents.Contains(Component))
 			{
 				VisibleComponents.Remove(Component);
 			}
-			DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
+			
+			DrawDebugLine(GetWorld(), GetComponentLocation(), HitResult.ImpactPoint, 
 					FColor::Red, false, 3.f);
-			UE_LOG(LogTemp, Log, TEXT("Sight obstructed"))
 		} else
 		{
 			if (!VisibleComponents.Contains(Component))
@@ -86,7 +80,6 @@ void USightSenseComponent::ProcessNearObjects()
 			}
 			DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
 					FColor::Yellow, false, 3.f);
-			UE_LOG(LogTemp, Log, TEXT("Clear sight"))
 		}
 	}
 }
@@ -96,21 +89,18 @@ void USightSenseComponent::OverlapStart(UPrimitiveComponent* OverlappedComponent
 {
 	if (OtherActor == GetOwner())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Other actor was owner"))
-		// return;
+		return;
 	}
-	OverlappedComponents.Add(OverlappedComponent);
-	UE_LOG(LogTemp, Log, TEXT("Sight overlapped component"))
+	OverlappedComponents.Add(OtherComponent);
 }
 
 void USightSenseComponent::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent, int OtherBodyIndex)
 {
-	// if (OtherActor == GetOwner()) return;
-	OverlappedComponents.Remove(OverlappedComponent);
+	if (OtherActor == GetOwner()) return;
+	OverlappedComponents.Remove(OtherComponent);
 	if (VisibleComponents.Contains(OtherComponent))
 	{
 		VisibleComponents.Remove(OtherComponent);
 	}
-	UE_LOG(LogTemp, Log, TEXT("Sight stopped overlap component"))
 }
