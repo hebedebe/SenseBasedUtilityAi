@@ -1,18 +1,5 @@
 ﻿#include "SoundBlackboard.h"
 
-FSoundData::FSoundData(USoundBase* Sound, FName Tag, AActor* OwningActor, FVector Location, float VolumeMultiplier,
-	float DetectionVolume) : Sound(Sound), Tag(Tag), OwningActor(OwningActor), Location(Location),
-	VolumeMultiplier(VolumeMultiplier), DetectionVolume(DetectionVolume)
-{
-	static unsigned int Count = 0;
-	Id = Count++;
-}
-
-bool FSoundData::operator==(const FSoundData& SoundData) const
-{
-	return Id == SoundData.Id;
-}
-
 FSoundBlackboard* FSoundBlackboard::Get()
 {
 	static FSoundBlackboard* Instance = new FSoundBlackboard();
@@ -24,39 +11,54 @@ void FSoundBlackboard::Destroy()
 	delete Get();
 }
 
-void FSoundBlackboard::AddSound(UObject* WorldContextObject, const FSoundData& SoundData)
+void FSoundBlackboard::AddSound(UObject* WorldContextObject, FSoundData* SoundData)
 {
-	Sounds.Add(SoundData);
+	Sounds.emplace_back(SoundData);
+	
+	if (!(IsValid(SoundData->OwningActor) && IsValid(SoundData->Sound)))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid owning actor or sound"));
+		return;
+	}
 	
 	// Remove the sound data from the pool after the longest time it can feasibly exist for
 	FTimerHandle TimerHandle;
-	WorldContextObject->GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda(
+	const auto LambdaFunc = FTimerDelegate::CreateLambda(
 	[this, SoundData]
 	{
 		RemoveSound(SoundData);
-	}), SoundData.Sound->Duration, false);
-}
-
-void FSoundBlackboard::RemoveSound(const FSoundData& SoundData)
-{
-	Sounds.Remove(SoundData);
+	});
 	
-	for (auto [_, ProcessedSoundArray] : ProcessedSounds)
+	UWorld* World = WorldContextObject->GetWorld();
+	if (IsValid(World))
 	{
-		ProcessedSoundArray.Remove(SoundData);
+		World->GetTimerManager().SetTimer(TimerHandle, LambdaFunc, SoundData->Sound->Duration, false);
+	} else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Could not access world while setting sound deletion timer"));
 	}
 }
 
-TArray<FSoundData> FSoundBlackboard::GetUnprocessedSounds(UObject* Target)
+void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 {
-	TArray<FSoundData> UnprocessedSounds;
+	Sounds.erase(std::ranges::find(Sounds, SoundData));
 	
-	for (FSoundData& SoundData : Sounds)
+	for (auto [_, ProcessedSoundArray] : ProcessedSounds)
 	{
-		if (!ProcessedSounds[Target].Contains(SoundData))
+		ProcessedSoundArray.erase(std::ranges::find(ProcessedSoundArray, SoundData));
+	}
+}
+
+std::vector<FSoundData*> FSoundBlackboard::GetUnprocessedSounds(UObject* Target)
+{
+	std::vector<FSoundData*> UnprocessedSounds;
+	
+	for (FSoundData* SoundData : Sounds)
+	{
+		if (std::ranges::find(ProcessedSounds[Target], SoundData) == ProcessedSounds[Target].end())
 		{
-			UnprocessedSounds.Add(SoundData);
-			ProcessedSounds[Target].Add(SoundData);
+			UnprocessedSounds.emplace_back(SoundData);
+			ProcessedSounds[Target].emplace_back(SoundData);
 		}
 	}
 	
@@ -70,5 +72,11 @@ FSoundBlackboard::FSoundBlackboard()
 
 FSoundBlackboard::~FSoundBlackboard()
 {
+	for (FSoundData*& SoundData : Sounds)
+	{
+		delete SoundData;
+		SoundData = nullptr;
+	}
+	
 	UE_LOG(LogLoad, Warning, TEXT("FSoundBlackboard singleton deleted"));
 }

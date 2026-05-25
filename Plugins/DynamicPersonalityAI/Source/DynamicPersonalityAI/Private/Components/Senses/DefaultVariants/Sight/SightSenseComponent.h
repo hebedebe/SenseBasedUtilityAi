@@ -19,9 +19,29 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	
+	UFUNCTION()
+	void ProcessNearObjects();
+	
+	UFUNCTION()
+	void OverlapStart(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+		UPrimitiveComponent* OtherComponent, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+		UPrimitiveComponent* OtherComponent, int OtherBodyIndex);
+	
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float UpdateFrequency = 0.2f;
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	TArray<UPrimitiveComponent*> Colliders;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TArray<UPrimitiveComponent*> OverlappedComponents;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TSet<UPrimitiveComponent*> VisibleComponents;
 };

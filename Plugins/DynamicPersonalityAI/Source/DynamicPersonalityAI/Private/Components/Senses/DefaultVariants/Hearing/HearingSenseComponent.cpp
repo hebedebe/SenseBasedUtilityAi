@@ -3,6 +3,7 @@
 
 #include "HearingSenseComponent.h"
 
+#include "KismetTraceUtils.h"
 #include "Components/Memory/MemoryComponent.h"
 #include "FunctionLibraries/Blackboards/SoundBlackboard.h"
 
@@ -14,6 +15,7 @@ UHearingSenseComponent::UHearingSenseComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	SenseType = "Hearing";
 	// ...
 }
 
@@ -33,35 +35,52 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                            FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	TArray<FSoundData> Sounds = FSoundBlackboard::Get()->GetUnprocessedSounds(this);
 	
-	const float SquaredHearingRange = HearingRange*HearingRange;
-	for (auto& [Sound, Tag, OwningActor, Location, VolumeMultiplier, DetectionVolume, _] : Sounds)
+	std::vector<FSoundData*> Sounds = FSoundBlackboard::Get()->GetUnprocessedSounds(this);
+	
+	const float SquaredHearingRange = HearingRange * HearingRange;
+	for (const FSoundData* SoundData : Sounds)
 	{
-		if (FVector::DistSquared(Location, GetComponentLocation()) <= SquaredHearingRange)
+		if (FVector::DistSquared(SoundData->Location, GetComponentLocation()) <= SquaredHearingRange)
 		{
-			const float Distance = FVector::Distance(Location, GetComponentLocation());
+			const float Distance = FVector::Distance(SoundData->Location, GetComponentLocation());
 			//Calculate the base volume in db with no obstructions
-			float CalculatedVolume = DetectionVolume-20.f*FMath::LogX(10.f, FLT_EPSILON/ (Distance/100.f)); //60db is regular conversation volume
+			float CalculatedVolume = SoundData->DetectionVolume-20.f*FMath::LogX(10.f, FLT_EPSILON/ (Distance/100.f)); //60db is regular conversation volume
 			
 			if (CalculatedVolume < MinHearingDb) continue;
 			
+			// Find obstacles
 			TArray<FHitResult> HitResults;
-			GetWorld()->LineTraceMultiByChannel(
-				HitResults,
-				Location,
-				GetComponentLocation(),
-				ECC_Camera
+			FCollisionQueryParams CollisionQueryParams;
+			CollisionQueryParams.AddIgnoredActor(GetOwner());
+			
+			bool bHit = GetWorld()->LineTraceMultiByChannel(
+			   HitResults,
+			   SoundData->Location,
+			   GetComponentLocation(),
+			   ECC_Camera,
+				CollisionQueryParams
 			);
 			
+			if (bDrawDebugRays)
+			{
+				DrawDebugLineTraceMulti(
+					GetWorld(),
+					SoundData->Location,
+					GetComponentLocation(),
+					EDrawDebugTrace::ForDuration,
+					bHit, HitResults, FLinearColor::Blue, FLinearColor::Green, 5.f
+				);
+			}
+			
+			// Apply obstacle muffling
 			for (int i = 0; i < HitResults.Num(); i++)
 			{
 				float SoundMuffling = DefaultObstacleMufflingStrength;
 				
 				// Check if object implements sound muffling interface or component
 				
-				CalculatedVolume -= 10.f*FMath::LogX(10.f, 3 + 20*SoundMuffling);
+				CalculatedVolume -= 10.f * FMath::LogX(10.f, 3 + 20 * SoundMuffling);
 				if (CalculatedVolume < MinHearingDb) break;
 			}
 			
@@ -72,11 +91,11 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					SenseType,
 					this,
 					{
-						SENSEKEY("Sound", FSenseCustomData::CreateUSoundBasePointer(Sound)),
-						SENSEKEY("Tag", FSenseCustomData::CreateFName(Tag)),
-						SENSEKEY("OwningActor", FSenseCustomData::CreateAActorPointer(OwningActor)),
-						SENSEKEY("Location", FSenseCustomData::CreateFVector(Location)),
-						SENSEKEY("VolumeMultiplier", FSenseCustomData::Createfloat(VolumeMultiplier)),
+						SENSEKEY("Sound", FSenseCustomData::CreateUSoundBasePointer(SoundData->Sound)),
+						SENSEKEY("Tag", FSenseCustomData::CreateFName(SoundData->Tag)),
+						SENSEKEY("OwningActor", FSenseCustomData::CreateAActorPointer(SoundData->OwningActor)),
+						SENSEKEY("Location", FSenseCustomData::CreateFVector(SoundData->Location)),
+						SENSEKEY("VolumeMultiplier", FSenseCustomData::Createfloat(SoundData->VolumeMultiplier)),
 						SENSEKEY("VolumeDb", FSenseCustomData::Createfloat(CalculatedVolume))
 					}
 				}

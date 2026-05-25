@@ -11,8 +11,17 @@ void UDynamicAudioFunctions::PlayDetectableSoundAtLocation(UObject* WorldContext
 	USoundAttenuation* AttenuationSettings, USoundConcurrency* ConcurrencySettings, 
 	AActor* OwningActor, const UInitialActiveSoundParams* InitialParams)
 {
+	if (FSoundBlackboard* SoundBlackboard = FSoundBlackboard::Get())
+	{
+		SoundBlackboard->AddSound(WorldContextObject, 
+			new FSoundData(Sound, DetectionTag, OwningActor, Location, VolumeMultiplier, DetectionVolume)
+			);
+	} 
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Could not access sound blackboard while playing detectable sound"));
+	}
+	
 	UGameplayStatics::PlaySoundAtLocation(WorldContextObject, Sound, Location, Rotation, VolumeMultiplier, PitchMultiplier, StartTime,
 		AttenuationSettings, ConcurrencySettings, OwningActor, InitialParams);
-	
-	FSoundBlackboard::Get()->AddSound(WorldContextObject, {Sound, DetectionTag, OwningActor, Location, VolumeMultiplier, DetectionVolume});
 }

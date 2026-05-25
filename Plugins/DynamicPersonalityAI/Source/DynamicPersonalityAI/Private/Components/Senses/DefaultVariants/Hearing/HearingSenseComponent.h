@@ -34,4 +34,7 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float MinHearingDb = 0.f;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool bDrawDebugRays = false;
 };
