@@ -8,7 +8,7 @@
 void FDynamicPersonalityAIModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	SoundBlackboard* SoundBlackboard = SoundBlackboard::Get();
+	FSoundBlackboard* SoundBlackboard = FSoundBlackboard::Get();
 	UE_LOG(LogLoad, Warning, TEXT("DynamicPersonalityAi Loaded"));
 }
 
@@ -16,7 +16,7 @@ void FDynamicPersonalityAIModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
-	SoundBlackboard::Destroy();
+	FSoundBlackboard::Destroy();
 	UE_LOG(LogExit, Warning, TEXT("DynamicPersonalityAi Shutdown"));
 }
 

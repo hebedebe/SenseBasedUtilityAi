@@ -38,6 +38,7 @@ public:
 	DATATYPE(FHitResult)
 	
 	// Pointer only values - won't compile with a regular value
+	DATATYPEPOINTER(USoundBase)
 	DATATYPEPOINTER(UDamageType)
 	DATATYPEPOINTER(AController)
 	DATATYPEPOINTER(UObject)

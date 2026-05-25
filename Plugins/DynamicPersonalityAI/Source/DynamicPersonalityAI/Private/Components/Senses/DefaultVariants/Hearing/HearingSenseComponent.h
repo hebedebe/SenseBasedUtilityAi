@@ -25,15 +25,13 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 	
-	class FSoundBlackboard
-	{
-	public:
-		FSoundBlackboard* Get();
-		
-	private:
-		FSoundBlackboard();
-		
-	private:
-		FSoundBlackboard* Instance;
-	};
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float HearingRange = 200;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float DefaultObstacleMufflingStrength = 3.f;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float MinHearingDb = 0.f;
 };
