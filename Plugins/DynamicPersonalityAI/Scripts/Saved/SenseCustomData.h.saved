@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "SenseCustomData.generated.h"
 
-
 #define DATATYPE(TYPE) \
 	UPROPERTY(BlueprintReadOnly, Category="SenseData") \
 	TYPE TYPE##Data; \

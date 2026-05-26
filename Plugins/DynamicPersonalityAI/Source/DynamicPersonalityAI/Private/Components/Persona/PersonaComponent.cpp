@@ -29,7 +29,9 @@ void UPersonaComponent::BeginPlay()
 	
 	for (auto ProcessorClass : SenseDataProcessorClasses)
 	{
-		SenseDataProcessors.Add(NewObject<USenseDataProcessor>(ProcessorClass));
+		USenseDataProcessor* SenseDataProcessor = NewObject<USenseDataProcessor>(this, ProcessorClass);
+		SenseDataProcessors.Add(SenseDataProcessor);
+		UE_LOG(LogTemp, Log, TEXT("Found USenseDataProcessor %s with class %s"), *SenseDataProcessor->GetName(), *ProcessorClass->GetName())
 	}
 }
 
@@ -47,7 +49,8 @@ void UPersonaComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		{
 			if (SenseDataProcessor->TargetSenseType == Data.SenseType)
 			{
-				SenseDataProcessor->ProcessSenseData(this, Data);
+				UE_LOG(LogTemp, Log, TEXT("Sending sense data to %s"), *SenseDataProcessor->GetName())
+				SenseDataProcessor->ProcessSenseData(this, this, Data);
 			}
 		}
 	}

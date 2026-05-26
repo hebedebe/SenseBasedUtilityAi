@@ -1,13 +1,8 @@
 import re
 import sys
-# import glob
-import colorama
 from pathlib import Path
 
-colorama.init()
-
-# exit()
-
+# region macro definitions
 replacementKey = "__TYPE__"
 
 DATATYPE_Macro = """
@@ -17,7 +12,7 @@ DATATYPE_Macro = """
 	inline void Set__TYPE__(const __TYPE__ Value) {__TYPE__Data = Value;}
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category="SenseData")
 	inline __TYPE__ Get__TYPE__() {return __TYPE__Data;}
-	static inline  USenseCustomData* Create__TYPE__(const __TYPE__ Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__(Value); return Data;}
+	static inline USenseCustomData* Create__TYPE__(const __TYPE__ Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__(Value); return Data;}
 """
 
 DATATYPEPOINTER_Macro = """
@@ -27,8 +22,9 @@ DATATYPEPOINTER_Macro = """
 	inline void Set__TYPE__Pointer(__TYPE__* Value) {__TYPE__PointerData = Value;}
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category="SenseData")
 	inline __TYPE__* Get__TYPE__Pointer() {return __TYPE__PointerData;}
-	static inline  USenseCustomData* Create__TYPE__Pointer(const __TYPE__* Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__Pointer(const_cast<__TYPE__*>(Value)); return Data;}
+	static inline USenseCustomData* Create__TYPE__Pointer(const __TYPE__* Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__Pointer(const_cast<__TYPE__*>(Value)); return Data;}
 """
+# endregion
 
 macros = {
     "DATATYPE": DATATYPE_Macro,
@@ -36,12 +32,12 @@ macros = {
 }
 
 def Log(*contents):
-    baseString = f"{colorama.Fore.YELLOW}[DYNAMIC UTILITY AI PREPROCESSOR]: "
+    baseString = f"[DYNAMIC UTILITY AI PREPROCESSOR]: "
     for line in contents:
         baseString += str(line)
-    baseString += colorama.Fore.RESET
     print(baseString)
 
+Log("hai :3")
 Log("Preprocessor starting")
 
 directory = sys.argv[1]

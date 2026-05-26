@@ -13,8 +13,8 @@ class DYNAMICPERSONALITYAI_API USenseDataProcessor : public UObject
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void ProcessSenseData(UPersonaComponent* PersonaComponent, FSenseData SenseData);
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, meta=(WorldContext="WorldContextObject"))
+	void ProcessSenseData(UObject* WorldContextObject, UPersonaComponent* PersonaComponent, FSenseData SenseData);
 	
 public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
