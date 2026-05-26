@@ -5,6 +5,7 @@
 
 #include "Components/ShapeComponent.h"
 #include "Components/Memory/MemoryComponent.h"
+#include "DataTypes/SenseData/CustomData/SenseCustomData.h"
 
 // Sets default values for this component's properties
 UTouchSenseComponent::UTouchSenseComponent()
@@ -50,11 +51,11 @@ void UTouchSenseComponent::HandleOwnerDamaged(AActor* DamagedActor, float Damage
 		SenseType,
 		this,
 		{
-			SENSEKEY("DamagedActor", FSenseCustomData::CreateAActorPointer(DamagedActor)),
-			SENSEKEY("Damage", FSenseCustomData::Createfloat(Damage)),
-			SENSEKEY("DamageType", FSenseCustomData::CreateUDamageTypePointer(DamageType)),
-			SENSEKEY("InstigatedBy", FSenseCustomData::CreateAControllerPointer(InstigatedBy)),
-			SENSEKEY("DamagedActor", FSenseCustomData::CreateAActorPointer(DamagedActor)),
+			SENSEKEY("DamagedActor", USenseCustomData::CreateAActorPointer(DamagedActor)),
+			SENSEKEY("Damage", USenseCustomData::Createfloat(Damage)),
+			SENSEKEY("DamageType", USenseCustomData::CreateUDamageTypePointer(DamageType)),
+			SENSEKEY("InstigatedBy", USenseCustomData::CreateAControllerPointer(InstigatedBy)),
+			SENSEKEY("DamagedActor", USenseCustomData::CreateAActorPointer(DamagedActor)),
 		}
 	});
 }
@@ -70,12 +71,12 @@ void UTouchSenseComponent::OverlapStart(UPrimitiveComponent* OverlappedComponent
 		SenseType,
 		this,
 		{
-			SENSEKEY("OverlappedComponent", FSenseCustomData::CreateUPrimitiveComponentPointer(OverlappedComponent)),
-			SENSEKEY("OtherActor", FSenseCustomData::CreateAActorPointer(OtherActor)),
-			SENSEKEY("OtherComponent", FSenseCustomData::CreateUPrimitiveComponentPointer(OtherComponent)),
-			SENSEKEY("OtherBodyIndex", FSenseCustomData::Createint(OtherBodyIndex)),
-			SENSEKEY("bFromSweep", FSenseCustomData::Createbool(bFromSweep)),
-			SENSEKEY("SweepResult", FSenseCustomData::CreateFHitResult(SweepResult)),
+			SENSEKEY("OverlappedComponent", USenseCustomData::CreateUPrimitiveComponentPointer(OverlappedComponent)),
+			SENSEKEY("OtherActor", USenseCustomData::CreateAActorPointer(OtherActor)),
+			SENSEKEY("OtherComponent", USenseCustomData::CreateUPrimitiveComponentPointer(OtherComponent)),
+			SENSEKEY("OtherBodyIndex", USenseCustomData::Createint(OtherBodyIndex)),
+			SENSEKEY("bFromSweep", USenseCustomData::Createbool(bFromSweep)),
+			SENSEKEY("SweepResult", USenseCustomData::CreateFHitResult(SweepResult))
 		}
 	});
 }
@@ -91,10 +92,10 @@ void UTouchSenseComponent::OverlapEnd(UPrimitiveComponent* OverlappedComponent, 
 		SenseType,
 		this,
 		{
-			SENSEKEY("OverlappedComponent", FSenseCustomData::CreateUPrimitiveComponentPointer(OverlappedComponent)),
-			SENSEKEY("OtherActor", FSenseCustomData::CreateAActorPointer(OtherActor)),
-			SENSEKEY("OtherComponent", FSenseCustomData::CreateUPrimitiveComponentPointer(OtherComponent)),
-			SENSEKEY("OtherBodyIndex", FSenseCustomData::Createint(OtherBodyIndex))
+			SENSEKEY("OverlappedComponent", USenseCustomData::CreateUPrimitiveComponentPointer(OverlappedComponent)),
+			SENSEKEY("OtherActor", USenseCustomData::CreateAActorPointer(OtherActor)),
+			SENSEKEY("OtherComponent", USenseCustomData::CreateUPrimitiveComponentPointer(OtherComponent)),
+			SENSEKEY("OtherBodyIndex", USenseCustomData::Createint(OtherBodyIndex))
 		}
 	});
 }
@@ -110,10 +111,10 @@ void UTouchSenseComponent::HandleOwnerTouched(AActor* SelfActor, AActor* OtherAc
 		SenseType,
 		this,
 		{
-			SENSEKEY("SelfActor", FSenseCustomData::CreateAActorPointer(SelfActor)),
-			SENSEKEY("OtherActor", FSenseCustomData::CreateAActorPointer(OtherActor)),
-			SENSEKEY("NormalImpulse", FSenseCustomData::CreateFVector(NormalImpulse)),
-			SENSEKEY("Hit", FSenseCustomData::CreateFHitResult(Hit))
+			SENSEKEY("SelfActor", USenseCustomData::CreateAActorPointer(SelfActor)),
+			SENSEKEY("OtherActor", USenseCustomData::CreateAActorPointer(OtherActor)),
+			SENSEKEY("NormalImpulse", USenseCustomData::CreateFVector(NormalImpulse)),
+			SENSEKEY("Hit", USenseCustomData::CreateFHitResult(Hit))
 		}
 	});
 }

@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "CustomData/SenseCustomData.h"
+
 #include "SenseData.generated.h"
 
-// struct FSenseCustomData;
+class USenseCustomData;
 class UBaseSenseComponent;
 
 USTRUCT(BlueprintType)
@@ -18,5 +18,5 @@ public:
 	UBaseSenseComponent* SourceSense;
 	
 	UPROPERTY(BlueprintReadOnly)
-	TMap<FName, FSenseCustomData> SenseMap;
+	TMap<FName, USenseCustomData*> SenseMap;
 };

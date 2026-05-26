@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
@@ -9,9 +7,7 @@
 class UPersonaComponent;
 class UMemoryComponent;
 class UBehaviourComponent;
-/**
- * 
- */
+
 UCLASS(BlueprintType, Blueprintable)
 class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 {
@@ -22,8 +18,10 @@ class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void EnterBehaviour();
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void TickBehaviour(float DeltaTime);
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ExitBehaviour();
 	

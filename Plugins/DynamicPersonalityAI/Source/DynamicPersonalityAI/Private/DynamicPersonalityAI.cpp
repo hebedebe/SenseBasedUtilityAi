@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "DynamicPersonalityAI.h"
-#include "FunctionLibraries/Blackboards/SoundBlackboard.h"
+#include "FunctionLibraries/Audio/Blackboards/SoundBlackboard.h"
 
 #define LOCTEXT_NAMESPACE "FDynamicPersonalityAIModule"
 

@@ -5,7 +5,8 @@
 
 #include "KismetTraceUtils.h"
 #include "Components/Memory/MemoryComponent.h"
-#include "FunctionLibraries/Blackboards/SoundBlackboard.h"
+#include "DataTypes/SenseData/CustomData/SenseCustomData.h"
+#include "FunctionLibraries/Audio/Blackboards/SoundBlackboard.h"
 
 
 // Sets default values for this component's properties
@@ -91,12 +92,12 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					SenseType,
 					this,
 					{
-						SENSEKEY("Sound", FSenseCustomData::CreateUSoundBasePointer(SoundData->Sound)),
-						SENSEKEY("Tag", FSenseCustomData::CreateFName(SoundData->Tag)),
-						SENSEKEY("OwningActor", FSenseCustomData::CreateAActorPointer(SoundData->OwningActor)),
-						SENSEKEY("Location", FSenseCustomData::CreateFVector(SoundData->Location)),
-						SENSEKEY("VolumeMultiplier", FSenseCustomData::Createfloat(SoundData->VolumeMultiplier)),
-						SENSEKEY("VolumeDb", FSenseCustomData::Createfloat(CalculatedVolume))
+						SENSEKEY("Sound", USenseCustomData::CreateUSoundBasePointer(SoundData->Sound)),
+						SENSEKEY("Tag", USenseCustomData::CreateFName(SoundData->Tag)),
+						SENSEKEY("OwningActor", USenseCustomData::CreateAActorPointer(SoundData->OwningActor)),
+						SENSEKEY("Location", USenseCustomData::CreateFVector(SoundData->Location)),
+						SENSEKEY("VolumeMultiplier", USenseCustomData::Createfloat(SoundData->VolumeMultiplier)),
+						SENSEKEY("VolumeDb", USenseCustomData::Createfloat(CalculatedVolume))
 					}
 				}
 			);

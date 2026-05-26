@@ -46,7 +46,7 @@ protected:
 	UFUNCTION()
 	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 		UPrimitiveComponent* OtherComponent, int OtherBodyIndex);
-	
+
 	UFUNCTION()
 	void HandleOwnerTouched(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 	

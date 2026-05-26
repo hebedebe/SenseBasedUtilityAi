@@ -25,7 +25,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSenseQueueEmpty() const;
-	
+
 public:
 	TQueue<FSenseData, EQueueMode::Mpsc> SenseDataQueue;
 };

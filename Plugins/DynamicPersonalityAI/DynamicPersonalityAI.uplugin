@@ -20,5 +20,10 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
-	]
+	],
+	"PreBuildSteps": {
+		"Win64": [
+			"@echo on & \"C:\\Program Files\\Python314\\python.exe\" \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\pre-pre-preprocessor.py\" \"$(ProjectDir)\""
+		]
+	}
 }

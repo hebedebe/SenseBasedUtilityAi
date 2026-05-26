@@ -5,6 +5,7 @@
 
 #include "Components/ShapeComponent.h"
 #include "Components/Memory/MemoryComponent.h"
+#include "DataTypes/SenseData/CustomData/SenseCustomData.h"
 
 
 // Sets default values for this component's properties
@@ -73,11 +74,15 @@ void USightSenseComponent::ProcessNearObjects()
 						SenseType,
 					this,
 					{
-						SENSEKEY("Component", FSenseCustomData::CreateUPrimitiveComponentPointer(Component))
+						SENSEKEY("Component", USenseCustomData::CreateUPrimitiveComponentPointer(Component)),
+						SENSEKEY("Actor", USenseCustomData::CreateAActorPointer(Component->GetOwner())),
+						SENSEKEY("Distance", USenseCustomData::Createfloat(HitResult.Distance)),
+						SENSEKEY("HitResult", USenseCustomData::CreateFHitResult(HitResult))
 						}
 					}
 				);
 			}
+			
 			DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
 					FColor::Yellow, false, 3.f);
 		}
