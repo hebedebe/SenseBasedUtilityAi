@@ -51,18 +51,37 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			if (CalculatedVolume < MinHearingDb) continue;
 			
 			// Find obstacles
-			TArray<FHitResult> HitResults;
+			TArray<FHitResult> HitResults;	
+			FHitResult HitResult;
 			FCollisionQueryParams CollisionQueryParams;
 			CollisionQueryParams.AddIgnoredActor(GetOwner());
-			
-			bool bHit = GetWorld()->LineTraceMultiByChannel(
-			   HitResults,
+
+			bool bHit = GetWorld()->LineTraceSingleByChannel(
+			   HitResult,
 			   SoundData->Location,
 			   GetComponentLocation(),
-			   ECC_Camera,
+			   ECC_OverlapAll_Deprecated,
 				CollisionQueryParams
 			);
+			if (bHit)
+				CollisionQueryParams.AddIgnoredActor(HitResult.Component->GetOwner());
+			HitResults.Add(HitResult);
 			
+			while (bHit)
+			{
+				bHit = GetWorld()->LineTraceSingleByChannel(
+				   HitResult,
+				   HitResult.ImpactPoint,
+				   GetComponentLocation(),
+				   ECC_OverlapAll_Deprecated,
+					CollisionQueryParams
+				);
+				if (bHit)
+					CollisionQueryParams.AddIgnoredActor(HitResult.Component->GetOwner());
+				HitResults.Add(HitResult);
+				
+			}
+				
 			if (bDrawDebugRays)
 			{
 				DrawDebugLineTraceMulti(
@@ -72,6 +91,22 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					EDrawDebugTrace::ForDuration,
 					bHit, HitResults, FLinearColor::Blue, FLinearColor::Green, 5.f
 				);
+				
+				for (const FHitResult& Result : HitResults)
+				{
+					if (IsValid(Result.Component.Get()))
+					{
+						auto ResultBounds = Result.Component->Bounds;
+						DrawDebugBox(
+							GetWorld(),
+							ResultBounds.Origin,
+							ResultBounds.BoxExtent,
+							FColor::Red,
+							false,
+							5.f
+							);
+					}
+				}
 			}
 			
 			// Apply obstacle muffling
