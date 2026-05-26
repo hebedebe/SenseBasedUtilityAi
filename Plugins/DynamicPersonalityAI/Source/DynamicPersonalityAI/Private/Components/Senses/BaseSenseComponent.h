@@ -5,6 +5,17 @@
 #include "BaseSenseComponent.generated.h"
 
 
+class ComponentSenseChecker
+{
+public:
+	static void RegisterSenseType(FName SenseType);
+	static bool CheckSenseType(FName SenseType);
+	
+public:
+	static TSet<FName> SenseTypes;
+};
+
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DYNAMICPERSONALITYAI_API UBaseSenseComponent : public USceneComponent
 {

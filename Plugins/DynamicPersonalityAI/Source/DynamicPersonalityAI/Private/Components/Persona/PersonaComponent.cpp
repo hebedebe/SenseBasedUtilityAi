@@ -31,6 +31,7 @@ void UPersonaComponent::BeginPlay()
 	{
 		USenseDataProcessor* SenseDataProcessor = NewObject<USenseDataProcessor>(this, ProcessorClass);
 		SenseDataProcessors.Add(SenseDataProcessor);
+		SenseDataProcessor->Check(); // Make sure the user has the target sense set
 		UE_LOG(LogTemp, Log, TEXT("Found USenseDataProcessor %s with class %s"), *SenseDataProcessor->GetName(), *ProcessorClass->GetName())
 	}
 }

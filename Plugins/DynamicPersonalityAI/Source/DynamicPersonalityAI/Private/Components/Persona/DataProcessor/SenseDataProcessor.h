@@ -16,7 +16,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, meta=(WorldContext="WorldContextObject"))
 	void ProcessSenseData(UObject* WorldContextObject, UPersonaComponent* PersonaComponent, FSenseData SenseData);
 	
+	UFUNCTION(BlueprintCallable)
+	void Check();
+	
 public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	FName TargetSenseType;
+	FName TargetSenseType = "None";
 };
