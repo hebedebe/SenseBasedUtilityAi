@@ -7,9 +7,9 @@
 #include "Components/Persona/PersonaComponent.h"
 #include "Components/Memory/MemoryComponent.h"
 
-TSet<FName> ComponentSenseChecker::SenseTypes;
+TSet<FName> FSenseValidityManager::SenseTypes;
 
-void ComponentSenseChecker::RegisterSenseType(const FName SenseType)
+void FSenseValidityManager::RegisterSenseType(const FName SenseType)
 {
 	if (SenseType == FName("None")) return;
 	
@@ -17,7 +17,7 @@ void ComponentSenseChecker::RegisterSenseType(const FName SenseType)
 	SenseTypes.Add(SenseType);
 }
 
-bool ComponentSenseChecker::CheckSenseType(const FName SenseType)
+bool FSenseValidityManager::CheckSenseType(const FName SenseType)
 {
 	return SenseTypes.Contains(SenseType);
 }
@@ -29,7 +29,7 @@ UBaseSenseComponent::UBaseSenseComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	
-	ComponentSenseChecker::RegisterSenseType(SenseType);
+	FSenseValidityManager::RegisterSenseType(SenseType);
 }
 
 
@@ -38,7 +38,7 @@ void UBaseSenseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ComponentSenseChecker::RegisterSenseType(SenseType);
+	FSenseValidityManager::RegisterSenseType(SenseType);
 	
 	BehaviourComponent = GetOwner()->GetComponentByClass<UBehaviourComponent>();
 	PersonaComponent = GetOwner()->GetComponentByClass<UPersonaComponent>();

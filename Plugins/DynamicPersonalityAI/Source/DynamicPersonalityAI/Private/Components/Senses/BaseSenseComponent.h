@@ -5,7 +5,7 @@
 #include "BaseSenseComponent.generated.h"
 
 
-class ComponentSenseChecker
+class FSenseValidityManager
 {
 public:
 	static void RegisterSenseType(FName SenseType);

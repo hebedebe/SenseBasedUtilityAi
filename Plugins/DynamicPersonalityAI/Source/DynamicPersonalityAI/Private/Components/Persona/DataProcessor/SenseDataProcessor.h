@@ -17,7 +17,7 @@ public:
 	void ProcessSenseData(UObject* WorldContextObject, UPersonaComponent* PersonaComponent, FSenseData SenseData);
 	
 	UFUNCTION(BlueprintCallable)
-	void Check();
+	void Check() const;
 	
 public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)

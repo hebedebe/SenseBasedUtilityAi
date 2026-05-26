@@ -5,17 +5,19 @@
 
 #include "Components/Senses/BaseSenseComponent.h"
 
-void USenseDataProcessor::Check()
+void USenseDataProcessor::Check() const
 {
 	UE_LOG(LogTemp, Warning, TEXT("Checking USenseDataProcessor"));
 	
 	if (TargetSenseType == FName("None"))
 	{
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 5, FColor::Red, TEXT("SenseComponent target sense type is unset - it will never trigger."));
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 5, FColor::Red, 
+			TEXT("SenseComponent target sense type is unset - it will never trigger."));
 	}
 	
-	if (!ComponentSenseChecker::CheckSenseType(TargetSenseType))
+	if (!FSenseValidityManager::CheckSenseType(TargetSenseType))
 	{
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 5, FColor::Red, TEXT("SenseComponent target sense type is not used by any senses - it will never trigger"));
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 5, FColor::Red, 
+			TEXT("SenseComponent target sense type is not used by any senses - it will never trigger"));
 	}
 }
