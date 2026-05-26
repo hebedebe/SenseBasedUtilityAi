@@ -6,7 +6,7 @@ from pathlib import Path
 
 colorama.init()
 
-exit()
+# exit()
 
 replacementKey = "__TYPE__"
 
@@ -20,7 +20,15 @@ DATATYPE_Macro = """
 	static inline  USenseCustomData* Create__TYPE__(const __TYPE__ Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__(Value); return Data;}
 """
 
-DATATYPEPOINTER_Macro = """"""
+DATATYPEPOINTER_Macro = """
+    UPROPERTY(BlueprintReadOnly, Category="SenseData")
+    __TYPE__* __TYPE__PointerData;
+    UFUNCTION(BlueprintCallable, Category="SenseData")
+	inline void Set__TYPE__Pointer(__TYPE__* Value) {__TYPE__PointerData = Value;}
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category="SenseData")
+	inline __TYPE__* Get__TYPE__Pointer() {return __TYPE__PointerData;}
+	static inline  USenseCustomData* Create__TYPE__Pointer(const __TYPE__* Value) { auto Data = NewObject<USenseCustomData>(); Data->Set__TYPE__Pointer(const_cast<__TYPE__*>(Value)); return Data;}
+"""
 
 macros = {
     "DATATYPE": DATATYPE_Macro,
@@ -37,8 +45,11 @@ def Log(*contents):
 Log("Preprocessor starting")
 
 directory = sys.argv[1]
+savePath = directory + "\\Plugins\\DynamicPersonalityAI\\Scripts\\Saved\\"
 
 Log("Got directory ", directory)
+
+savedFiles = {}
 
 files = Path(directory).rglob("*.h")
 fileCount = 0
@@ -52,16 +63,17 @@ for file in files:
             hadMacro = False
             for macroName in macros.keys():
                 if macroName in line and line[0] != "#":
+                    #Cache a copy of the file
+                    if file.name not in savedFiles.keys():
+                        savedFiles[file.name] = lines.copy()
+                        Log("Cached copy of file ", file.name)
+
                     lineTokens = re.split(r'[()\t]', line)
-                    Log("Found tokens ", lineTokens, " at line ", lineCount)
-                    with open (f"{file.name}.saved", "w") as saveFile:
-                        saveFile.write(f.read())
-                        saveFile.close()
                     macroType = lineTokens[1]
                     macroArg = lineTokens[2]
                     newLineContents = macros[macroType].replace(replacementKey, macroArg)
                     newLines.append(newLineContents)
-                    Log("Expanded line ", lineCount)
+                    Log("Expanded line ", lineCount, " In file ", file.name)
                     hadMacro = True
                     break
             if not hadMacro:
@@ -72,3 +84,11 @@ for file in files:
             writableFile.writelines(newLines)
             writableFile.close()
             
+Log("Saving original copies...")
+for fileName in savedFiles.keys():
+    with open(savePath+fileName+".saved", "w") as f:
+        f.writelines(savedFiles[fileName])
+        f.close()
+    Log("Saved file ", fileName)
+    
+Log("Preprocessing complete!")

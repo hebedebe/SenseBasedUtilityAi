@@ -25,5 +25,10 @@
 		"Win64": [
 			"@echo on & \"C:\\Program Files\\Python314\\python.exe\" \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\pre-pre-preprocessor.py\" \"$(ProjectDir)\""
 		]
+	},
+	"PostBuildSteps": {
+		"Win64": [
+			"@echo on & \"C:\\Program Files\\Python314\\python.exe\" \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\restore.py\" \"$(ProjectDir)\""
+		]
 	}
 }
