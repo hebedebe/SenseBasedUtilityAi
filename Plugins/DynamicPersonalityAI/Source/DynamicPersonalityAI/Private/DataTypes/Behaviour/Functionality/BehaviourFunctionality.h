@@ -28,6 +28,12 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ExitBehaviour();
 	
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual class UWorld* GetWorld() const override;
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ImplementsGetWorld() const override;
+	
 public:
 	void SetActive(bool bActive);
 	

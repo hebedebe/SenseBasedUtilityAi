@@ -34,6 +34,9 @@ protected:
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float UpdateFrequency = 0.2f;
+	
+	UPROPERTY(blueprintreadWrite, EditAnywhere)
+	bool bDrawDebug;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

@@ -62,8 +62,11 @@ void USightSenseComponent::ProcessNearObjects()
 				VisibleComponents.Remove(Component);
 			}
 			
-			DrawDebugLine(GetWorld(), GetComponentLocation(), HitResult.ImpactPoint, 
-					FColor::Red, false, 3.f);
+			if (bDrawDebug)
+			{
+				DrawDebugLine(GetWorld(), GetComponentLocation(), HitResult.ImpactPoint, 
+						FColor::Red, false, 3.f);
+			}
 		} else
 		{
 			if (!VisibleComponents.Contains(Component))
@@ -83,8 +86,11 @@ void USightSenseComponent::ProcessNearObjects()
 				);
 			}
 			
-			DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
-					FColor::Yellow, false, 3.f);
+			if (bDrawDebug)
+			{
+				DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
+						FColor::Yellow, false, 3.f);
+			}
 		}
 	}
 }

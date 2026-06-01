@@ -21,6 +21,16 @@ void UBehaviourFunctionality::BeginPlay_Implementation()
 {
 }
 
+class UWorld* UBehaviourFunctionality::GetWorld() const
+{
+	return OwningActor->GetWorld();
+}
+
+bool UBehaviourFunctionality::ImplementsGetWorld() const
+{
+	return true;
+}
+
 void UBehaviourFunctionality::SetActive(const bool bActive)
 {
 	bIsActive = bActive;
