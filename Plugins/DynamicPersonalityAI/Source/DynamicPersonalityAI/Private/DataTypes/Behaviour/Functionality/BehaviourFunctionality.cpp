@@ -16,3 +16,12 @@ void UBehaviourFunctionality::ExitBehaviour_Implementation()
 {
 	UE_LOG(LogTemp, Log, TEXT("Behaviour Exited"));
 }
+
+void UBehaviourFunctionality::BeginPlay_Implementation()
+{
+}
+
+void UBehaviourFunctionality::SetActive(const bool bActive)
+{
+	bIsActive = bActive;
+}

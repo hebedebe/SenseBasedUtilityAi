@@ -14,6 +14,7 @@ UBehaviourFunctionality* UBehaviourData::Initialise(UBehaviourComponent* Behavio
 	BehaviourFunctionality->PersonaComponent = BehaviourComponent->Persona;
 	BehaviourFunctionality->MemoryComponent = BehaviourComponent->Memory;
 	BehaviourFunctionality->OwningActor = BehaviourComponent->GetOwner();
+	BehaviourFunctionality->BeginPlay();
 	
 	return BehaviourFunctionality;
 }

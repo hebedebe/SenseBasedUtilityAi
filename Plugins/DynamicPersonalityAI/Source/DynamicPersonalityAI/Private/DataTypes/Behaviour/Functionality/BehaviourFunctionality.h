@@ -17,6 +17,9 @@ class DYNAMICPERSONALITYAI_API UBehaviourFunctionality : public UObject
 	
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void BeginPlay();
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void EnterBehaviour();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -24,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ExitBehaviour();
+	
+public:
+	void SetActive(bool bActive);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -37,4 +43,7 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly)
 	AActor* OwningActor;
+	
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsActive;
 };

@@ -95,11 +95,13 @@ TMap<UMood*, float> UBehaviourComponent::GetPersonaWeights() const
 void UBehaviourComponent::EnterBehaviour(UBehaviourData* Data)
 {
 	BehaviourFunctionalities[Data]->EnterBehaviour();
+	BehaviourFunctionalities[Data]->SetActive(true);
 }
 
 void UBehaviourComponent::ExitBehaviour(UBehaviourData* Data)
 {
 	BehaviourFunctionalities[Data]->ExitBehaviour();
+	BehaviourFunctionalities[Data]->SetActive(false);
 }
 
 void UBehaviourComponent::TickBehaviour(UBehaviourData* Data, const float DeltaTime)

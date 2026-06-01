@@ -50,7 +50,6 @@ savedFiles = {}
 files = Path(directory).rglob("*.h")
 fileCount = 0
 for file in files:
-    # Log("Checking file ", file)
     with open(file, "r+") as f:
         lines = f.readlines()
         newLines = []
