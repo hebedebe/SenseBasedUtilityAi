@@ -99,7 +99,7 @@ void UBehaviourComponent::EnterBehaviour(UBehaviourData* Data)
 }
 
 void UBehaviourComponent::ExitBehaviour(UBehaviourData* Data)
-{
+{;	
 	BehaviourFunctionalities[Data]->ExitBehaviour();
 	BehaviourFunctionalities[Data]->SetActive(false);
 }

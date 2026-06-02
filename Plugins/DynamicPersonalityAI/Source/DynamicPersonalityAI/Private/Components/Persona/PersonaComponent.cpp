@@ -52,6 +52,9 @@ void UPersonaComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			{
 				UE_LOG(LogTemp, Log, TEXT("Sending sense data to %s"), *SenseDataProcessor->GetName())
 				SenseDataProcessor->ProcessSenseDataWrapper(this, this, Data);
+			} else
+			{
+				// UE_LOG(LogTemp, Log, TEXT("Skipping sensedata processor %s"), *SenseDataProcessor->GetName())
 			}
 		}
 	}
