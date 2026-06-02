@@ -54,8 +54,9 @@ void USightSenseComponent::ProcessNearObjects()
 		CollisionParams.AddIgnoredActor(GetOwner());
 		CollisionParams.AddIgnoredActor(Component->GetOwner());
 		
-		if (GetWorld()->LineTraceSingleByChannel(HitResult, GetComponentLocation(), 
-			Component->GetComponentLocation(),ECC_Camera, CollisionParams))
+		FVector StartLocation = GetComponentLocation();
+		if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, 
+			Component->GetComponentLocation(),ECC_MAX, CollisionParams))
 		{
 			if (VisibleComponents.Contains(Component))
 			{
@@ -88,7 +89,7 @@ void USightSenseComponent::ProcessNearObjects()
 			
 			if (bDrawDebug)
 			{
-				DrawDebugLine(GetWorld(), GetComponentLocation(), Component->GetComponentLocation(), 
+				DrawDebugLine(GetWorld(), StartLocation, Component->GetComponentLocation(), 
 						FColor::Yellow, false, 3.f);
 			}
 		}
