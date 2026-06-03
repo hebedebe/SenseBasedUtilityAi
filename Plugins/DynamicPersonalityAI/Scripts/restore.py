@@ -1,16 +1,10 @@
 import sys
-# import glob
-import colorama
 from pathlib import Path
 
-colorama.init()
-
-
 def Log(*contents):
-    baseString = f"{colorama.Fore.YELLOW}[DYNAMIC UTILITY AI PREPROCESSOR]: "
+    baseString = "[DYNAMIC UTILITY AI PREPROCESSOR]: "
     for line in contents:
         baseString += str(line)
-    baseString += colorama.Fore.RESET
     print(baseString)
 
 Log("Beginning file restoration")

@@ -32,7 +32,7 @@ macros = {
 }
 
 def Log(*contents):
-    baseString = f"[DYNAMIC UTILITY AI PREPROCESSOR]: "
+    baseString = "[DYNAMIC UTILITY AI PREPROCESSOR]: "
     for line in contents:
         baseString += str(line)
     print(baseString)

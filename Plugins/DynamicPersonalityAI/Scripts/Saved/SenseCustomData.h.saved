@@ -35,7 +35,7 @@ public:
 	DATATYPE(FVector2D)
 	DATATYPE(bool)
 	DATATYPE(FHitResult)
-	
+		
 	// Pointer only values - UObjects won't compile with a regular value (no copy constructor)
 	DATATYPEPOINTER(USoundBase)
 	DATATYPEPOINTER(UDamageType)
