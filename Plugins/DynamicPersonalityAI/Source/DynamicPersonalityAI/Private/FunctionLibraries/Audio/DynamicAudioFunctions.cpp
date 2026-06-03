@@ -7,14 +7,21 @@
 #include "Kismet/GameplayStatics.h"
 
 void UDynamicAudioFunctions::PlayDetectableSoundAtLocation(UObject* WorldContextObject, USoundBase* Sound, const FVector Location,
-	const FRotator Rotation, FName DetectionTag, const float DetectionVolume, const float VolumeMultiplier, const float PitchMultiplier, const float StartTime, 
+	const FRotator Rotation, FName DetectionTag, const float VolumeMultiplier, const float DetectionVolumeDb, const float PitchMultiplier, const float StartTime, 
 	USoundAttenuation* AttenuationSettings, USoundConcurrency* ConcurrencySettings, 
 	AActor* OwningActor, const UInitialActiveSoundParams* InitialParams)
 {
 	if (FSoundBlackboard* SoundBlackboard = FSoundBlackboard::Get())
 	{
 		SoundBlackboard->AddSound(WorldContextObject, 
-			new FSoundData(Sound, DetectionTag, OwningActor, Location, VolumeMultiplier, DetectionVolume)
+			new FSoundData{
+				.Sound = Sound, 
+				.Tag = DetectionTag, 
+				.OwningActor = OwningActor, 
+				.Location = Location, 
+				.VolumeMultiplier = VolumeMultiplier, 
+				.DetectionVolume = DetectionVolumeDb,
+			}
 			);
 	} 
 	else

@@ -44,7 +44,7 @@ void UBehaviourComponent::BeginPlay()
 			
 			if (UBehaviourData* TargetBehaviour = EvaluateBehaviours())
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Evaluated behaviour as %s "), *TargetBehaviour->GetName())
+				// UE_LOG(LogTemp, Warning, TEXT("Evaluated behaviour as %s "), *TargetBehaviour->GetName())
 				
 				if (ActiveBehaviour == TargetBehaviour) return;
 		

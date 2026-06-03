@@ -46,8 +46,8 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		{
 			const float Distance = FVector::Distance(SoundData->Location, GetComponentLocation());
 			//Calculate the base volume in db with no obstructions
-			float CalculatedVolume = SoundData->DetectionVolume-20.f*FMath::LogX(10.f, FLT_EPSILON/ (Distance/100.f)); //60db is regular conversation volume
-			
+			float CalculatedVolume = SoundData->DetectionVolume - (20.f*FMath::LogX(10.f, (Distance/100.f)));
+			UE_LOG(LogTemp, Log, TEXT("Calculated distance (%f m) based volume of %f db from %f db"), Distance/100.f, CalculatedVolume, SoundData->DetectionVolume)
 			if (CalculatedVolume < MinHearingDb) continue;
 			
 			// Find obstacles
@@ -114,9 +114,7 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			{
 				float SoundMuffling = DefaultObstacleMufflingStrength;
 				
-				// Check if object implements sound muffling interface or component
-				
-				CalculatedVolume -= 10.f * FMath::LogX(10.f, 3 + 20 * SoundMuffling);
+				CalculatedVolume += 20.f * FMath::LogX(10.f, FMath::Max(SoundMuffling, SMALL_NUMBER));
 				if (CalculatedVolume < MinHearingDb) break;
 			}
 			
