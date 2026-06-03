@@ -20,6 +20,8 @@ public:
 	static void Destroy();
 		
 public:
+	void Reset();
+	
 	void AddSound(UObject* WorldContextObject, FSoundData* SoundData);
 	void RemoveSound(const FSoundData* SoundData);
 	

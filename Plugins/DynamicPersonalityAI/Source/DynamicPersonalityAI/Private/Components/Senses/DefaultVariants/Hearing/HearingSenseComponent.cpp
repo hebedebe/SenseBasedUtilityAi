@@ -26,8 +26,8 @@ void UHearingSenseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	// inefficient but there's no other real way to do it
+	FSoundBlackboard::Get()->Reset();
 }
 
 

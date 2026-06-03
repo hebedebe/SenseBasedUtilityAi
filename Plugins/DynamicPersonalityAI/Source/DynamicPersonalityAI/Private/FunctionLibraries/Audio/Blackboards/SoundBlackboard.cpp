@@ -1,5 +1,7 @@
 ﻿#include "SoundBlackboard.h"
 
+#include <ranges>
+
 FSoundBlackboard* FSoundBlackboard::Get()
 {
 	static FSoundBlackboard* Instance = new FSoundBlackboard();
@@ -9,6 +11,13 @@ FSoundBlackboard* FSoundBlackboard::Get()
 void FSoundBlackboard::Destroy()
 {
 	delete Get();
+}
+
+void FSoundBlackboard::Reset()
+{
+	Sounds.clear();
+	ProcessedSounds.clear();
+	UE_LOG(LogTemp, Log, TEXT("Cleared sound blackboard"));
 }
 
 void FSoundBlackboard::AddSound(UObject* WorldContextObject, FSoundData* SoundData)
@@ -41,11 +50,15 @@ void FSoundBlackboard::AddSound(UObject* WorldContextObject, FSoundData* SoundDa
 
 void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 {
-	Sounds.erase(std::ranges::find(Sounds, SoundData));
+	const auto SoundArray = std::ranges::find(Sounds, SoundData);
+	if (SoundArray != Sounds.end())
+		Sounds.erase(SoundArray);
 	
-	for (auto [_, ProcessedSoundArray] : ProcessedSounds)
+	for (auto ProcessedSoundArray : ProcessedSounds | std::views::values)
 	{
-		ProcessedSoundArray.erase(std::ranges::find(ProcessedSoundArray, SoundData));
+		auto Sound = std::ranges::find(ProcessedSoundArray, SoundData);
+		if (Sound != Sounds.end())
+			ProcessedSoundArray.erase(Sound);
 	}
 }
 

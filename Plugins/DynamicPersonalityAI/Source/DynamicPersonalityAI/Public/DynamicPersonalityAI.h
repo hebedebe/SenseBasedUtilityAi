@@ -12,6 +12,7 @@ public:
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+	
 };
 // Copyright Epic Games, Inc. All Rights Reserved.
 
