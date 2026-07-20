@@ -1,0 +1,42 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.DynamicPersonalityAI.cpp.obj": [
+			"BaseSenseComponent.gen.cpp.obj",
+			"BehaviourComponent.gen.cpp.obj",
+			"BehaviourData.gen.cpp.obj",
+			"BehaviourFunctionality.gen.cpp.obj",
+			"DynamicAudioFunctions.gen.cpp.obj",
+			"DynamicPersonalityAI.init.gen.cpp.obj",
+			"HearingSenseComponent.gen.cpp.obj",
+			"MemoryComponent.gen.cpp.obj",
+			"Mood.gen.cpp.obj",
+			"MoodVisualiser.gen.cpp.obj",
+			"MoodVisualiserComponent.gen.cpp.obj",
+			"PersonaComponent.gen.cpp.obj",
+			"SenseCustomData.gen.cpp.obj",
+			"SenseData.gen.cpp.obj",
+			"SenseDataProcessor.gen.cpp.obj",
+			"SightSenseComponent.gen.cpp.obj",
+			"TouchSenseComponent.gen.cpp.obj",
+			"BehaviourComponent.cpp.obj",
+			"MoodVisualiser.cpp.obj",
+			"MoodVisualiserComponent.cpp.obj",
+			"MemoryComponent.cpp.obj",
+			"SenseDataProcessor.cpp.obj",
+			"PersonaComponent.cpp.obj",
+			"BaseSenseComponent.cpp.obj",
+			"HearingSenseComponent.cpp.obj",
+			"SightSenseComponent.cpp.obj",
+			"TouchSenseComponent.cpp.obj",
+			"BehaviourData.cpp.obj",
+			"BehaviourFunctionality.cpp.obj",
+			"Mood.cpp.obj",
+			"SenseCustomData.cpp.obj",
+			"SenseData.cpp.obj",
+			"DynamicPersonalityAI.cpp.obj",
+			"SoundBlackboard.cpp.obj",
+			"DynamicAudioFunctions.cpp.obj"
+		]
+	}
+}

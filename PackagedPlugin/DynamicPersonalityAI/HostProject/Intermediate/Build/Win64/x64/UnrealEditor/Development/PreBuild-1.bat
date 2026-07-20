@@ -1,0 +1,2 @@
+@echo off
+@echo on & "C:\Users\s242289\Documents\Git\SenseBasedUtilityAi\PackagedPlugin\DynamicPersonalityAI\HostProject\Plugins\DynamicPersonalityAI\Scripts\Start.bat" "C:\Users\s242289\Documents\Git\SenseBasedUtilityAi\PackagedPlugin\DynamicPersonalityAI\HostProject\Plugins\DynamicPersonalityAI\Scripts\pre-pre-preprocessor.py" "C:\Users\s242289\Documents\Git\SenseBasedUtilityAi\PackagedPlugin\DynamicPersonalityAI\HostProject"

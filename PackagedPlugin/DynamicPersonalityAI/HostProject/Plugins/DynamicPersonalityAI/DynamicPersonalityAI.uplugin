@@ -1,0 +1,34 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DynamicPersonalityAI",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DynamicPersonalityAI",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"PreBuildSteps": {
+		"Win64": [
+			"@echo on & \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\Start.bat\" \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\pre-pre-preprocessor.py\" \"$(ProjectDir)\""
+		]
+	},
+	"PostBuildSteps": {
+		"Win64": [
+			"@echo on & \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\Start.bat\" \"$(ProjectDir)\\Plugins\\DynamicPersonalityAI\\Scripts\\restore.py\" \"$(ProjectDir)\""
+		]
+	}
+}

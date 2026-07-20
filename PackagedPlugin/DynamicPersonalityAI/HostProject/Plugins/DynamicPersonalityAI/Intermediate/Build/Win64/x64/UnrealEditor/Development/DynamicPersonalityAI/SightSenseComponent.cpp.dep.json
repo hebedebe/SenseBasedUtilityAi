@@ -1,0 +1,25 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\components\\senses\\defaultvariants\\sight\\sightsensecomponent.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dynamicpersonalityai\\definitions.dynamicpersonalityai.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\components\\senses\\defaultvariants\\sight\\sightsensecomponent.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\components\\senses\\basesensecomponent.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\basesensecomponent.generated.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\sightsensecomponent.generated.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\shapecomponent.generated.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\components\\memory\\memorycomponent.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\datatypes\\sensedata\\sensedata.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\sensedata.generated.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\memorycomponent.generated.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\datatypes\\sensedata\\customdata\\sensecustomdata.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\sensecustomdata.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

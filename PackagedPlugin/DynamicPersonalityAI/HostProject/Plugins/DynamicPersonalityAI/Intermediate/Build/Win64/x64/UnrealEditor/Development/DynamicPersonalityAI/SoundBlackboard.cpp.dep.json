@@ -1,0 +1,26 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\functionlibraries\\audio\\blackboards\\soundblackboard.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dynamicpersonalityai\\definitions.dynamicpersonalityai.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\functionlibraries\\audio\\blackboards\\soundblackboard.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\map",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xtree",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xnode_handle.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xpolymorphic_allocator.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\vector",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_bit_utils.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_sanitizer_annotate_container.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\ranges",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_int128.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\span",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\string_view",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xstring"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

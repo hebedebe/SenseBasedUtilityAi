@@ -1,0 +1,1 @@
+This plugin requires python to be installed. When compiling the plugin, this may cause a terminal to appear and dissapear several times - this is just the precompiler running.

@@ -1,0 +1,32 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\functionlibraries\\audio\\dynamicaudiofunctions.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dynamicpersonalityai\\definitions.dynamicpersonalityai.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\functionlibraries\\audio\\dynamicaudiofunctions.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\intermediate\\build\\win64\\unrealeditor\\inc\\dynamicpersonalityai\\uht\\dynamicaudiofunctions.generated.h",
+            "c:\\users\\s242289\\documents\\git\\sensebasedutilityai\\packagedplugin\\dynamicpersonalityai\\hostproject\\plugins\\dynamicpersonalityai\\source\\dynamicpersonalityai\\private\\functionlibraries\\audio\\blackboards\\soundblackboard.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\map",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xtree",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xnode_handle.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xpolymorphic_allocator.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\vector",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_bit_utils.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_sanitizer_annotate_container.hpp",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystatics.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetsystemlibrary.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetsystemlibrary.generated.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\sound\\dialoguetypes.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\dialoguetypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystaticstypes.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gameplaystaticstypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gameplaystatics.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
