@@ -56,9 +56,17 @@ void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 	
 	for (auto ProcessedSoundArray : ProcessedSounds | std::views::values)
 	{
+		if (!IsValid(SoundData->OwningActor)) return;
+		
 		auto Sound = std::ranges::find(ProcessedSoundArray, SoundData);
 		if (Sound != Sounds.end())
-			ProcessedSoundArray.erase(Sound);
+			try
+			{
+				ProcessedSoundArray.erase(Sound);
+			} catch (...) // no idea whats actually causing this issue
+			{
+				UE_LOG(LogTemp, Error, TEXT("Could not access processed sound"));
+			}
 	}
 }
 

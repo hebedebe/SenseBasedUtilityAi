@@ -14,4 +14,4 @@ if "%~2"=="" (
 
 @echo on
 
-"C:\Program Files\Autodesk\RV-2025.0.0\bin\python.exe" "%~1" %2
+start "" "%PYTHON_PATH%" "%~1" %2

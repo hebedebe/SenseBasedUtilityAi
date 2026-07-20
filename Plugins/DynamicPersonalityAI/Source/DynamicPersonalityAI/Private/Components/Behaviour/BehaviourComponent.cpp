@@ -19,7 +19,6 @@ UBehaviourComponent::UBehaviourComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UBehaviourComponent::BeginPlay()
 {
@@ -41,7 +40,7 @@ void UBehaviourComponent::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(BehaviourEvaluationTimerHandle, 
 		[this]
 		{
-			
+			if (!IsValid(this)) return;
 			if (UBehaviourData* TargetBehaviour = EvaluateBehaviours())
 			{
 				// UE_LOG(LogTemp, Warning, TEXT("Evaluated behaviour as %s "), *TargetBehaviour->GetName())
@@ -60,8 +59,15 @@ void UBehaviourComponent::BeginPlay()
 		BehaviourEvaluationFrequency, true);
 }
 
+void UBehaviourComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	GetWorld()->GetTimerManager().ClearTimer(BehaviourEvaluationTimerHandle);
+	BehaviourData.Empty();
+	Super::EndPlay(EndPlayReason);
+}
+
 void UBehaviourComponent::TickComponent(float DeltaTime, enum ELevelTick TickType,
-	FActorComponentTickFunction* ThisTickFunction)
+                                        FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
@@ -71,17 +77,27 @@ void UBehaviourComponent::TickComponent(float DeltaTime, enum ELevelTick TickTyp
 
 UBehaviourData* UBehaviourComponent::EvaluateBehaviours()
 {
-	float LowestWeight = 1e+38;
+	if (!IsValid(this) || !BehaviourData.IsValidIndex(0)) return nullptr;
+
 	UBehaviourData* CurrentBehaviour = nullptr;
 	
-	for (UBehaviourData* Behaviour : BehaviourData)
+	try
 	{
-		const float EvaluatedMoodWeights = Behaviour->EvaluateMoodWeights(GetPersonaWeights());
-		if (EvaluatedMoodWeights < LowestWeight)
+		float LowestWeight = 1e+38;
+		for (UBehaviourData* Behaviour : BehaviourData)
 		{
-			CurrentBehaviour = Behaviour;
-			LowestWeight = EvaluatedMoodWeights;
+			if (!IsValid(Behaviour)) continue; // Usually triggers on level change
+		
+			const float EvaluatedMoodWeights = Behaviour->EvaluateMoodWeights(GetPersonaWeights());
+			if (EvaluatedMoodWeights < LowestWeight)
+			{
+				CurrentBehaviour = Behaviour;
+				LowestWeight = EvaluatedMoodWeights;
+			}
 		}
+	} catch (...)
+	{
+		return nullptr;
 	}
 	
 	return CurrentBehaviour;

@@ -46,53 +46,63 @@ void USightSenseComponent::BeginPlay()
 
 void USightSenseComponent::ProcessNearObjects()
 {
-	for (UPrimitiveComponent* Component : OverlappedComponents)
+	if (!IsValid(this)) return;
+	
+	try
 	{
-		FHitResult HitResult;
-		
-		FCollisionQueryParams CollisionParams;
-		CollisionParams.AddIgnoredActor(GetOwner());
-		CollisionParams.AddIgnoredActor(Component->GetOwner());
-		
-		FVector StartLocation = GetComponentLocation();
-		if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, 
-			Component->GetComponentLocation(),ECC_MAX, CollisionParams))
+		for (UPrimitiveComponent* Component : OverlappedComponents)
 		{
-			if (VisibleComponents.Contains(Component))
+			if (!IsValid(Component)) continue;
+		
+			FHitResult HitResult;
+		
+			FCollisionQueryParams CollisionParams;
+			CollisionParams.AddIgnoredActor(GetOwner());
+			CollisionParams.AddIgnoredActor(Component->GetOwner());
+		
+			FVector StartLocation = GetComponentLocation();
+			if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, 
+				Component->GetComponentLocation(),ECC_MAX, CollisionParams))
 			{
-				VisibleComponents.Remove(Component);
-			}
+				if (VisibleComponents.Contains(Component))
+				{
+					VisibleComponents.Remove(Component);
+				}
 			
-			if (bDrawDebug)
+				if (bDrawDebug)
+				{
+					DrawDebugLine(GetWorld(), GetComponentLocation(), HitResult.ImpactPoint, 
+							FColor::Red, false, 3.f);
+				}
+			} else
 			{
-				DrawDebugLine(GetWorld(), GetComponentLocation(), HitResult.ImpactPoint, 
-						FColor::Red, false, 3.f);
-			}
-		} else
-		{
-			if (!VisibleComponents.Contains(Component))
-			{
-				VisibleComponents.Add(Component);
-				MemoryComponent->RegisterSenseData(
-					{
-						SenseType,
-					this,
-					{
-						SENSEKEY("Component", USenseCustomData::CreateUPrimitiveComponentPointer(Component)),
-						SENSEKEY("Actor", USenseCustomData::CreateAActorPointer(Component->GetOwner())),
-						SENSEKEY("Distance", USenseCustomData::Createfloat(HitResult.Distance)),
-						SENSEKEY("HitResult", USenseCustomData::CreateFHitResult(HitResult))
+				if (!VisibleComponents.Contains(Component))
+				{
+					VisibleComponents.Add(Component);
+					MemoryComponent->RegisterSenseData(
+						{
+							SenseType,
+						this,
+						{
+							SENSEKEY("Component", USenseCustomData::CreateUPrimitiveComponentPointer(Component)),
+							SENSEKEY("Actor", USenseCustomData::CreateAActorPointer(Component->GetOwner())),
+							SENSEKEY("Distance", USenseCustomData::Createfloat(HitResult.Distance)),
+							SENSEKEY("HitResult", USenseCustomData::CreateFHitResult(HitResult))
+							}
 						}
-					}
-				);
-			}
+					);
+				}
 			
-			if (bDrawDebug)
-			{
-				DrawDebugLine(GetWorld(), StartLocation, Component->GetComponentLocation(), 
-						FColor::Yellow, false, 3.f);
+				if (bDrawDebug)
+				{
+					DrawDebugLine(GetWorld(), StartLocation, Component->GetComponentLocation(), 
+							FColor::Yellow, false, 3.f);
+				}
 			}
 		}
+	} catch (...)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Could not access processed sound"));
 	}
 }
 
