@@ -32,7 +32,7 @@ public:
 	virtual class UWorld* GetWorld() const override;
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category="UtilityAI")
-	virtual bool ImplementsGetWorld() const override;
+	virtual bool ImplementsGetWorld() const;
 	
 public:
 	void SetActive(bool bActive);

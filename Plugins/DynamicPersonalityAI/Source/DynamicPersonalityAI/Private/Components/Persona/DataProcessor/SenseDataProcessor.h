@@ -32,7 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category="UtilityAI")
 	virtual class UWorld* GetWorld() const override;
 	
-	virtual bool ImplementsGetWorld() const override;
+	virtual bool ImplementsGetWorld() const;
 	
 public:
 	void ProcessSenseDataWrapper(UObject* WorldContextObject, UPersonaComponent* PersonaComponent, FSenseData SenseData);

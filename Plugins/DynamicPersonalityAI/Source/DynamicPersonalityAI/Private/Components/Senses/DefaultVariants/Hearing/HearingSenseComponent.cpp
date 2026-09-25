@@ -82,6 +82,7 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				
 			}
 				
+#ifndef UE_BUILD_SHIPPING 
 			if (bDrawDebugRays)
 			{
 				DrawDebugLineTraceMulti(
@@ -108,6 +109,7 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					}
 				}
 			}
+#endif
 			
 			// Apply obstacle muffling
 			for (int i = 0; i < HitResults.Num(); i++)
