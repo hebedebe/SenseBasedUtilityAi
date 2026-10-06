@@ -50,6 +50,9 @@ void FSoundBlackboard::AddSound(UObject* WorldContextObject, FSoundData* SoundDa
 
 void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 {
+	if (!SoundData)
+		return;
+	
 	const auto SoundArray = std::ranges::find(Sounds, SoundData);
 	if (SoundArray != Sounds.end())
 		Sounds.erase(SoundArray);
@@ -57,9 +60,9 @@ void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 	for (auto ProcessedSoundArray : ProcessedSounds | std::views::values)
 	{
 		if (!IsValid(SoundData->OwningActor)) return;
-		
-		auto Sound = std::ranges::find(ProcessedSoundArray, SoundData);
-		if (Sound != Sounds.end())
+
+		std::vector<FSoundData*>::iterator Sound = std::find(ProcessedSoundArray.begin(), ProcessedSoundArray.end(), SoundData);
+		if (Sound != ProcessedSoundArray.end())
 			ProcessedSoundArray.erase(Sound);
 	}
 }
@@ -67,6 +70,9 @@ void FSoundBlackboard::RemoveSound(const FSoundData* SoundData)
 std::vector<FSoundData*> FSoundBlackboard::GetUnprocessedSounds(UObject* Target)
 {
 	std::vector<FSoundData*> UnprocessedSounds;
+	
+	// if (!IsValid(Target))
+		// return UnprocessedSounds;
 	
 	for (FSoundData* SoundData : Sounds)
 	{

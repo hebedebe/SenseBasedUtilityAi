@@ -19,6 +19,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 	UFUNCTION()
 	void ProcessNearObjects();
@@ -47,4 +48,7 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category="UtilityAI")
 	TSet<UPrimitiveComponent*> VisibleComponents;
+	
+private:
+	FTimerHandle ObjectProcessorHandle;
 };

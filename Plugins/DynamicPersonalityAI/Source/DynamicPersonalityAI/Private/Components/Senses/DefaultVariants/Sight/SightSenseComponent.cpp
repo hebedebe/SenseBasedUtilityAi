@@ -6,6 +6,7 @@
 #include "Components/ShapeComponent.h"
 #include "Components/Memory/MemoryComponent.h"
 #include "DataTypes/SenseData/CustomData/SenseCustomData.h"
+#include "UObject/FastReferenceCollector.h"
 
 
 // Sets default values for this component's properties
@@ -39,17 +40,27 @@ void USightSenseComponent::BeginPlay()
 		}
 	}
 	
-	FTimerHandle ObjectProcessorHandle;
 	GetWorld()->GetTimerManager().SetTimer(ObjectProcessorHandle, [this]{ProcessNearObjects();}, 
 		UpdateFrequency, true);
 }
 
+void USightSenseComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	
+	GetWorld()->GetTimerManager().ClearTimer(ObjectProcessorHandle);
+}
+
 void USightSenseComponent::ProcessNearObjects()
 {
-	if (!IsValid(this)) return;
+	if (!TWeakObjectPtr(this).IsValid() || !IsValid(this))
+	{
+		return;
+	}
+	
 	for (UPrimitiveComponent* Component : OverlappedComponents)
 	{
-		if (!IsValid(Component)) continue;
+		if (!TWeakObjectPtr(Component).IsValid()) continue;
 	
 		FHitResult HitResult;
 	

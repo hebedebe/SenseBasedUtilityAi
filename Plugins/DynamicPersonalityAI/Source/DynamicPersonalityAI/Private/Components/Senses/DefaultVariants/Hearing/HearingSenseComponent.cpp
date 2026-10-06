@@ -123,7 +123,7 @@ void UHearingSenseComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			if (CalculatedVolume < MinHearingDb) continue;
 			
 			MemoryComponent->RegisterSenseData(
-				{
+				{ 
 					SenseType,
 					this,
 					{
