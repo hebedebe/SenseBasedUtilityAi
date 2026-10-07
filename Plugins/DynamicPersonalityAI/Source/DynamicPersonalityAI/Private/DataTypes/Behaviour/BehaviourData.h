@@ -22,7 +22,7 @@ public:
 	TSubclassOf<UBehaviourFunctionality> BehaviourFunctionalityClass;
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="UtilityAI")
-	TMap<class UMood*, float> MoodWeights;
+	TMap<UMood*, float> MoodWeights;
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="UtilityAI")
 	float Bias;
